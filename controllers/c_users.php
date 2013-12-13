@@ -139,19 +139,19 @@
 	
 	public function p_login() {
 		# Sanitize the user entered data to prevent any funny-business (re: SQL Injection Attacks)
-			$_POST = DB::instance(DB_NAME)->sanitize($_POST);
+		$_POST = DB::instance(DB_NAME)->sanitize($_POST);
 	
 		# Hash submitted password so we can compare it against one in the db
-			$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 	
 		# Search the db for this email and password, retrieve the token if it's available
-			$q = "SELECT token 
-				FROM users 
-				WHERE email = '".$_POST['email']."' 
-				AND password = '".$_POST['password']."'";
-	
-			$token = DB::instance(DB_NAME)->select_field($q);
-	
+		$q = "SELECT token 
+			FROM users 
+			WHERE email = '".$_POST['email']."' 
+			AND password = '".$_POST['password']."'";
+
+		$token = DB::instance(DB_NAME)->select_field($q);
+
 		# Login failed
 		if(!$token) {
 			Router::redirect("/users/login/login-failed");

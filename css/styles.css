@@ -69,16 +69,12 @@ body {
 
 /* Header */
 
-header {
-}
-
 header img {
 	margin: -10px 50px 5px 5px;	
 }
 
 /* Forms */
 form {
-	width:300px;
 }
 
 fieldset {
@@ -90,22 +86,22 @@ legend {
 	font-family: 'Cherry Swash', cursive;
 	font-size: 1.3em;
 	font-weight: bold;
-  text-shadow: 1px 1px 0px #d1d1d1;
+	text-shadow: 1px 1px 0px #d1d1d1;
 }
 
 label, .label {
 	font-family: 'Cherry Swash', cursive;
 	font-size: .9em;
 	font-weight: bold;
-  text-shadow: 1px 1px 0px #d1d1d1;
-	width: 100px;
+	text-shadow: 1px 1px 0px #d1d1d1;
+	width: 200px;
 }
 
 #switch-link {
 	font-family: 'Cherry Swash', cursive;
 	font-size: .9em;
 	font-weight: bold;
-  text-shadow: 1px 1px 0px #d1d1d1;
+	text-shadow: 1px 1px 0px #d1d1d1;
 	text-decoration: none;
 	color: #514c49;
 	margin: 10px;
@@ -147,7 +143,7 @@ article {
 	font-family: 'Cherry Swash', cursive;
 	font-size: .9em;
 	font-weight: bold;
-  text-shadow: 1px 1px 0px #d1d1d1;
+	text-shadow: 1px 1px 0px #d1d1d1;
 }
 
 .user_post {
@@ -167,7 +163,7 @@ article {
 	font-family: 'Cherry Swash', cursive;
 	font-size: .9em;
 	font-weight: bold;
-  text-shadow: 1px 1px 0px #d1d1d1;
+	text-shadow: 1px 1px 0px #d1d1d1;
 }
 
 .post_comment {

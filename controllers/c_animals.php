@@ -18,8 +18,16 @@
 		# Setup view
 		$this->template->content = View::instance('v_animals_add');
 		$this->template->title   = "Add a New Animal";
-		
+
+		$q = "SELECT species 
+			FROM animals 
+			ORDER BY species ASC";
+
+		# Run posts query, store the results in the variable $posts
+		$animal_list = DB::instance(DB_NAME)->select_rows($q);
+
 		#Pass data to the view
+		$this->template->content->animal_list = $animal_list;
 		$this->template->content->error = $error;
 
 		# Render template

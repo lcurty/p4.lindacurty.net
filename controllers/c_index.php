@@ -25,7 +25,7 @@ class index_controller extends base_controller {
 			if($this->user) {
 				
 				# If yes, send to post_index view.
-				Router::redirect("/posts");
+				Router::redirect("/users/profile");
 			}
 			
 			else {
