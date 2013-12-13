@@ -27,4 +27,4 @@ class base_controller {
 			
 	}
 	
-} # eoc
+} # End of class

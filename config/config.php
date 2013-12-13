@@ -14,7 +14,7 @@ If you want a different default time format for this app, set it below
 */
 
 # What is the name of this app?
-	define('APP_NAME', 'Farm Fanatics Animal Tracker');  
+	define('APP_NAME', 'Farm Friends');  
 
 # When email is sent out from the server, where should it come from?
 # Ideally, this should match the domain name
@@ -43,5 +43,5 @@ A email designated to receive messages from the server. Examples:
 	//define('SMTP_PASSWORD', '');
 
 # For extra security, you might want to set different salts than what the core uses
-	define('PASSWORD_SALT', 'blaksdjfnnojkhkjnbkbiyt345neijfkdsjf');
-	define('TOKEN_SALT', '98s7dfuihjkkjhbn88078hisduihfnweiurhj');
+	define('PASSWORD_SALT', 'jdneig4510oj0293584oh345ne1dfuAg7s');
+	define('TOKEN_SALT', 'jen8H54Fn9knsdf98078hisduihfnwH8S4df');

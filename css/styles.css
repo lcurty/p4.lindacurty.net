@@ -1,0 +1,256 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	background-image: url(../images/8-red.jpg);
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: .8em;
+	color: #514c49;
+}
+
+.error {
+	color: #FF0000;
+}
+
+#outer {
+	border-style: solid;
+	border-color: #bfbdb2;
+	margin: 0px auto;
+	box-shadow: 0px 0px 15px 2px #8f8d82;
+}
+
+#page {
+	overflow: hidden;
+	border-style: solid;
+	border-color: #e7e2c9;
+	padding: 10px;
+	padding-top: 40px;
+	margin: 0px;
+	background-color: #ffffff;
+	opacity:0.9;
+	filter:alpha(opacity=90); /* For IE8 and earlier */
+}
+
+#logged_in #outer {
+	margin-top: -30px;
+	width: 1000px;
+	border-width: 0px 7px;
+}
+
+#logged_out #outer {
+	margin-top: 20px;
+	width: 1000px;
+	border-width: 7px;
+	border-radius: 20px;
+}
+
+#logged_in #page {
+	border-width: 0px 7px;
+}
+
+#logged_out #page {
+	border-width: 7px;
+	border-radius: 15px;
+}
+
+.clear {
+	clear: both;
+	visibility: hidden;
+	margin: 2px;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+/* Header */
+
+header {
+}
+
+header img {
+	margin: -10px 50px 5px 5px;	
+}
+
+/* Forms */
+form {
+	width:300px;
+}
+
+fieldset {
+	margin: auto 5px;
+	border: 0px;
+}
+
+legend {
+	font-family: 'Cherry Swash', cursive;
+	font-size: 1.3em;
+	font-weight: bold;
+  text-shadow: 1px 1px 0px #d1d1d1;
+}
+
+label, .label {
+	font-family: 'Cherry Swash', cursive;
+	font-size: .9em;
+	font-weight: bold;
+  text-shadow: 1px 1px 0px #d1d1d1;
+	width: 100px;
+}
+
+#switch-link {
+	font-family: 'Cherry Swash', cursive;
+	font-size: .9em;
+	font-weight: bold;
+  text-shadow: 1px 1px 0px #d1d1d1;
+	text-decoration: none;
+	color: #514c49;
+	margin: 10px;
+	margin-left: 265px;
+}
+
+/* Navigation */
+nav {
+	float: right;
+	margin: -20px 0px;
+}
+
+nav, nav a {
+	font-size: .9em;
+	color: #514c49;
+	padding-right: 5px;
+}
+
+/* Links */
+
+a:link, a:visited, a:hover, a:active {
+	color: #514c49;
+	text-decoration: none;
+}
+
+/* Posts and Comments*/
+
+form.addPost {
+	float:right;
+	margin-right: 400px;
+}
+
+article {
+	margin: 0px 5px 10px 0px;
+}
+
+.posted_by{
+	margin-bottom: 3px;
+	font-family: 'Cherry Swash', cursive;
+	font-size: .9em;
+	font-weight: bold;
+  text-shadow: 1px 1px 0px #d1d1d1;
+}
+
+.user_post {
+	background-color: #E6F0FB;
+	padding: 1px 15px 15px 35px;
+	margin-left: 50px;
+	font-size: 0.9em;
+	border-radius: 10px;
+}
+
+.comment_form {
+	margin-bottom:-15px;
+}
+
+.comment_by{
+	margin-bottom: 3px;
+	font-family: 'Cherry Swash', cursive;
+	font-size: .9em;
+	font-weight: bold;
+  text-shadow: 1px 1px 0px #d1d1d1;
+}
+
+.post_comment {
+	background-color: #EEFEDE;
+	padding: 1px 15px 18px 15px;
+	font-size: 0.9em;
+	border-radius: 10px;
+	margin-right: 35px;
+}
+
+.has_comment {
+	width: 54%;
+	float: left;
+}
+
+.comment_box {
+	margin-top: 30px;
+	float: right;
+	width: 45%;
+}
+
+article time {
+	font-size: .7em;
+	font-style: italic;
+	margin-top: -9px;
+	float: right;
+}
+
+.my_photo {
+	float: right;
+	text-align: center;
+	margin: 30px 200px 5px 20px;
+}
+
+/* Profile Images */
+
+.circular {
+	border-radius: 150px;
+	-webkit-border-radius: 150px;
+	-moz-border-radius: 150px;
+	border: 1px solid #bfbdb2;
+}
+
+.my_photo .circular {
+	width: 150px;
+	height: 150px;
+	margin: 10px;
+}
+
+.posts .circular {
+	width: 75px;
+	height: 75px;
+	float: left;
+	margin: 5px 10px 10px 0px;
+}
+
+.comments .circular,
+.users_table .circular {
+	width: 60px;
+	height: 60px;
+	margin: -7px 0px 0px;
+}
+
+.comments .circular {
+	float: right;
+}
+
+/* User List */
+
+.users_table {
+	border: 0px;
+}
+
+.users_table td {
+	padding: 4px 10px;
+}
+
+.button {
+	background-color: #e7e2c9;
+	padding: 4px 6px;
+	font-size: .8em;
+	font-weight: bold;
+	margin: 0px 10px;
+	border: 1px solid #514c49;
+	border-radius: 5px;
+}

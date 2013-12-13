@@ -19,22 +19,13 @@ class index_controller extends base_controller {
 		#	$this->template->content = View::instance('v_index_index');
 			
 		# Now set the <title> tag
-		#	$this->template->title = "Farm Fanatics Animal Tracker";
-	
-		# CSS/JS includes
-			/*
-			$client_files_head = Array("");
-	    	$this->template->client_files_head = Utils::load_client_files($client_files);
-	    	
-	    	$client_files_body = Array("");
-	    	$this->template->client_files_body = Utils::load_client_files($client_files_body);   
-	    	*/
-	      					     		
+		#	$this->template->title = "";
+			
 			# Make sure user is logged in
 			if($this->user) {
 				
 				# If yes, send to post_index view.
-				Router::redirect("/users/profile");
+				Router::redirect("/posts");
 			}
 			
 			else {
@@ -51,6 +42,5 @@ class index_controller extends base_controller {
     	Time::now();
 
 	} # End of method
-	
 	
 } # End of class

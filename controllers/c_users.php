@@ -7,8 +7,8 @@
 
 	public function index() {
 		# Setup view
-		$this->template->content = View::instance('v_index_index');
-		$this->template->title   = "Farm Fanatics Animal Tracker";
+		$this->template->content = View::instance('v_users_profile');
+		$this->template->title   = "Farm Friends";
 
 		# Render template
 		echo $this->template;
@@ -50,7 +50,7 @@
 		if(isset($_FILES['profile_image']['name']) && ($_FILES['profile_image']['name'] != "")){
 			
 			# Setup Image Restrictions
-			$allowedExts = array("gif", "jpeg", "jpg", "png");
+			$allowedExts = array("gif", "jpeg", "jpg", "png", "JPG", "GIF", "JPEG", "PNG");
 			$temp = explode(".", $_FILES["profile_image"]["name"]);
 			$extension = end($temp);
 			
@@ -98,17 +98,17 @@
 						$y = ($height - $width) / 2;
 						$smallestSide = $width;
 					}
-					$thumbSize = 100;
+					$thumbSize = 200;
 					$thumb = imagecreatetruecolor($thumbSize, $thumbSize);
 					imagecopyresampled($thumb, $myImage, 0, 0, $x, $y, $thumbSize, $thumbSize, $smallestSide, $smallestSide);
 					
 					# Move file to folder
 					header($_FILES["profile_image"]["type"]);
-					if ($ext == "gif") {
+					if (($ext == "gif") || ($ext == "GIF")) {
 						imagegif($thumb, $target);
-					} elseif (($ext == "jpeg") || ($ext == "jpg")){
+					} elseif (($ext == "jpeg") || ($ext == "jpg") || ($ext == "JPEG") || ($ext == "JPG")){
 						imagejpeg($thumb, $target);
-					} elseif ($ext == "png") {
+					} elseif (($ext == "png") || ($ext == "PNG")) {
 						imagepng($thumb, $target);
 					}
 				
@@ -153,14 +153,14 @@
 			$token = DB::instance(DB_NAME)->select_field($q);
 	
 		# Login failed
-    if(!$token) {
-        Router::redirect("/users/login/login-failed");
-    }
-    # Login passed
-    else {
-        setcookie("token", $token, strtotime('+2 weeks'), '/');
-				Router::redirect("/");
-			}
+		if(!$token) {
+			Router::redirect("/users/login/login-failed");
+		}
+		# Login passed
+		else {
+			setcookie("token", $token, strtotime('+2 weeks'), '/');
+			Router::redirect("/users/profile");
+		}
 	}
 	
 	public function logout() {
@@ -168,39 +168,38 @@
     	$new_token = sha1(TOKEN_SALT.$this->user->email.Utils::generate_random_string());
     	$data = Array("token" => $new_token);
 
-    # Do the update
+    	# Do the update
     	DB::instance(DB_NAME)->update("users", $data, "WHERE token = '".$this->user->token."'");
 
-    # Delete their token cookie
+    	# Delete their token cookie
     	setcookie("token", "", strtotime('-1 year'), '/');
 
-    # Send them back to the main index.
+    	# Send them back to the main index.
     	Router::redirect("/");
 
 	}
 	
-	public function profile() {
+	public function profile () {
 		# Setup view
 		$this->template->content = View::instance('v_users_profile');
-		$this->template->title   = "Farm Fanatics: Farmer Profile";
+		$this->template->title   = "Farm Friends: Farmer Profile";
 		
 		# Query posts
 		$q = 'SELECT 
-						users.first_name,
-						users.last_name,
-						users.profile_image
-					FROM users
-					WHERE users.user_id = '.$this->user->user_id;
+				users.first_name,
+				users.last_name,
+				users.profile_image
+			FROM users
+			WHERE users.user_id = '.$this->user->user_id;
 				
 		# Run posts query, store the results in the variable $posts
 		$profiles = DB::instance(DB_NAME)->select_rows($q);
 
 		# Pass data (users and connections) to the view
-    $this->template->content->profiles       = $profiles;
+    	$this->template->content->profiles       = $profiles;
 
 		# Render template
 		echo $this->template;
-		
 	}
 
 } # end of the class
