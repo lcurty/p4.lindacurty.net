@@ -47,7 +47,7 @@
 		if(isset($_FILES['baby_image']['name']) && ($_FILES['baby_image']['name'] != "")){
 			
 			# Setup Image Restrictions
-			$allowedExts = array("gif", "jpeg", "jpg", "png", "JPG", "GIF", "JPEG", "PNG");
+			$allowedExts = array("gif", "jpeg", "jpg", "png");
 			$temp = explode(".", $_FILES["baby_image"]["name"]);
 			$extension = end($temp);
 			
@@ -59,13 +59,8 @@
 			$target = $target . $ran2.$ext;
 			
 			# Check Image Restrictions
-			if ((($_FILES["baby_image"]["type"] == "image/gif")
-				|| ($_FILES["baby_image"]["type"] == "image/jpeg")
-				|| ($_FILES["baby_image"]["type"] == "image/jpg")
-				|| ($_FILES["baby_image"]["type"] == "image/pjpeg")
-				|| ($_FILES["baby_image"]["type"] == "image/x-png")
-				|| ($_FILES["baby_image"]["type"] == "image/png"))
-				&& in_array($ext, $allowedExts)) {
+			if (in_array($ext, $allowedExts)) {
+
 					if (file_exists($target)) {
 						
 						# Regenerate Random Number for New Filename
@@ -77,12 +72,14 @@
 					
 					# Resize and crop image
 					$crop_image = ($_FILES['baby_image']['tmp_name']);
-					header($_FILES["baby_image"]["type"]);
-					if (($ext == "gif") || ($ext == "GIF")) {
+					if ($ext == "gif") {
+						header('Content-Type: image/gif');
 						$myImage = imagecreatefromgif($crop_image);
-					} elseif (($ext == "jpeg") || ($ext == "jpg") || ($ext == "JPEG") || ($ext == "JPG")){
+					} elseif (($ext == "jpg") || ($ext == "jpeg")){
+						header('Content-Type: image/jpg');
 						$myImage = imagecreatefromjpeg($crop_image);
-					} elseif (($ext == "png") || ($ext == "PNG")) {
+					} elseif ($ext == "png") {
+						header('Content-Type: image/png');
 						$myImage = imagecreatefrompng($crop_image);
 					}
 					list($width, $height) = getimagesize($crop_image);
@@ -97,23 +94,26 @@
 					}
 					$thumbSize = 200;
 					$thumb = imagecreatetruecolor($thumbSize, $thumbSize);
-					imagecopyresampled($thumb, $myImage, 0, 0, $x, $y, $thumbSize, $thumbSize, $smallestSide, $smallestSide);
-					
+					imagecopyresized($thumb, $myImage, 0, 0, $x, $y, $thumbSize, $thumbSize, $smallestSide, $smallestSide);
+
 					# Move file to folder
-					header($_FILES["baby_image"]["type"]);
-					if (($ext == "gif") || ($ext == "GIF")) {
+					if ($ext == "gif") {
 						imagegif($thumb, $target);
-					} elseif (($ext == "jpeg") || ($ext == "jpg") || ($ext == "JPEG") || ($ext == "JPG")){
+					} elseif (($ext == "jpeg") || ($ext == "jpg")){
 						imagejpeg($thumb, $target);
-					} elseif (($ext == "png") || ($ext == "PNG")) {
+					} elseif ($ext == "png") {
 						imagepng($thumb, $target);
 					}
+					
+					#Clear memory of images
+					imagedestroy( $myImage );
+					imagedestroy( $thumb );
 				
 					# Send to Database
 					$_POST['baby_image'] = $ran2.$ext;
 	
 			} else {
-				echo "Invalid file";
+				$error = "Invalid file";
 			}
 		}
 
@@ -121,7 +121,7 @@
 		if(isset($_FILES['adult_image']['name']) && ($_FILES['adult_image']['name'] != "")){
 			
 			# Setup Image Restrictions
-			$allowedExts = array("gif", "jpeg", "jpg", "png", "JPG", "GIF", "JPEG", "PNG");
+			$allowedExts = array("gif", "jpeg", "jpg", "png");
 			$temp = explode(".", $_FILES["adult_image"]["name"]);
 			$extension = end($temp);
 			
@@ -133,13 +133,8 @@
 			$target = $target . $ran2.$ext;
 			
 			# Check Image Restrictions
-			if ((($_FILES["adult_image"]["type"] == "image/gif")
-				|| ($_FILES["adult_image"]["type"] == "image/jpeg")
-				|| ($_FILES["adult_image"]["type"] == "image/jpg")
-				|| ($_FILES["adult_image"]["type"] == "image/pjpeg")
-				|| ($_FILES["adult_image"]["type"] == "image/x-png")
-				|| ($_FILES["adult_image"]["type"] == "image/png"))
-				&& in_array($ext, $allowedExts)) {
+			if (in_array($ext, $allowedExts)) {
+
 					if (file_exists($target)) {
 						
 						# Regenerate Random Number for New Filename
@@ -151,12 +146,14 @@
 					
 					# Resize and crop image
 					$crop_image = ($_FILES['adult_image']['tmp_name']);
-					header($_FILES["adult_image"]["type"]);
-					if (($ext == "gif") || ($ext == "GIF")) {
+					if ($ext == "gif") {
+						header('Content-Type: image/gif');
 						$myImage = imagecreatefromgif($crop_image);
-					} elseif (($ext == "jpeg") || ($ext == "jpg") || ($ext == "JPEG") || ($ext == "JPG")){
+					} elseif (($ext == "jpg") || ($ext == "jpeg")){
+						header('Content-Type: image/jpg');
 						$myImage = imagecreatefromjpeg($crop_image);
-					} elseif (($ext == "png") || ($ext == "PNG")) {
+					} elseif ($ext == "png") {
+						header('Content-Type: image/png');
 						$myImage = imagecreatefrompng($crop_image);
 					}
 					list($width, $height) = getimagesize($crop_image);
@@ -171,23 +168,26 @@
 					}
 					$thumbSize = 200;
 					$thumb = imagecreatetruecolor($thumbSize, $thumbSize);
-					imagecopyresampled($thumb, $myImage, 0, 0, $x, $y, $thumbSize, $thumbSize, $smallestSide, $smallestSide);
-					
+					imagecopyresized($thumb, $myImage, 0, 0, $x, $y, $thumbSize, $thumbSize, $smallestSide, $smallestSide);
+
 					# Move file to folder
-					header($_FILES["adult_image"]["type"]);
-					if (($ext == "gif") || ($ext == "GIF")) {
+					if ($ext == "gif") {
 						imagegif($thumb, $target);
-					} elseif (($ext == "jpeg") || ($ext == "jpg") || ($ext == "JPEG") || ($ext == "JPG")){
+					} elseif (($ext == "jpeg") || ($ext == "jpg")){
 						imagejpeg($thumb, $target);
-					} elseif (($ext == "png") || ($ext == "PNG")) {
+					} elseif ($ext == "png") {
 						imagepng($thumb, $target);
 					}
+					
+					#Clear memory of images
+					imagedestroy( $myImage );
+					imagedestroy( $thumb );
 				
 					# Send to Database
 					$_POST['adult_image'] = $ran2.$ext;
 	
 			} else {
-				echo "Invalid file";
+				$error = "Invalid file";
 			}
 		}
 		

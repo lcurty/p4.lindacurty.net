@@ -27,9 +27,10 @@
             
                 <!-- Menu for users who are logged in -->
                 <?php if($user): ?>
-                    <a href='#'>Your Farm</a>
+                    <a href='/users/profile'>Your Farm</a>
                     <a href='#'>Farm Feed</a>
                     <a href='/posts/users'>Follow Farmers</a>
+                    <a href='/users/edit'>Edit Profile</a>
                     <a href='/users/logout'>Logout</a>
             
                 <!-- Menu options for users who are not logged in -->

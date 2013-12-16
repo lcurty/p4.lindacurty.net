@@ -46,109 +46,79 @@
 		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);            
 		$_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
 
-	Upload::upload($_FILES, "/uploads/", array("jpg", "jpeg", "gif", "png"), "foobar");
-		
-		# Access first element in file_obj array (b/c we're dealing with single file uploads only)
-		$key = key($_FILES['profile_image']);
-		
-		$original_file_name = $file_obj[$key]['name'];
-		$temp_file          = $file_obj[$key]['tmp_name'];
-		$upload_dir         = 'images/profile/';
-		$allowed_files		= array("jpg", "jpeg", "gif", "png");
-		
-		# If new file name not given, use original file name
-		$new_file_name = $original_file_name;
-		
-		$file_parts  = pathinfo($original_file_name);
-		$target_file = getcwd().$upload_dir . $new_file_name . "." . $file_parts['extension'];
-								
-		# Validate the filetype
-		if (in_array($file_parts['extension'], $allowed_files)) {
-	
-			# Save the file
-				move_uploaded_file($temp_file,$target_file);
-				return $new_file_name . "." . $file_parts['extension'];
-			# Write to db
-			$_POST['profile_image'] = $new_file_name;
-	
-		} else {
-			return 'Invalid file type.';
-		}
-	
+		# Check if image added
+		if(isset($_FILES['profile_image']['name']) && ($_FILES['profile_image']['name'] != "")){
+			
+			# Setup Image Restrictions
+			$allowedExts = array("gif", "jpeg", "jpg", "png");
+			$temp = explode(".", $_FILES["profile_image"]["name"]);
+			$extension = end($temp);
+			
+			# Rename File
+			$ext = pathinfo(($_FILES['profile_image']['name']), PATHINFO_EXTENSION); 
+			$ran = rand ();
+			$ran2 = pathinfo(($_FILES['profile_image']['name']), PATHINFO_FILENAME) . $ran.".";
+			$target = "images/profile/";
+			$target = $target . $ran2.$ext;
+			
+			# Check Image Restrictions
+			if (in_array($ext, $allowedExts)) {
 
-		
-//		# Check if image added
-//		if(isset($_FILES['profile_image']['name']) && ($_FILES['profile_image']['name'] != "")){
-//			
-//			# Setup Image Restrictions
-//			$allowedExts = array("gif", "jpeg", "jpg", "png");
-//			$temp = explode(".", $_FILES["profile_image"]["name"]);
-//			$extension = end($temp);
-//			
-//			# Rename File
-//			$ext = pathinfo(($_FILES['profile_image']['name']), PATHINFO_EXTENSION); 
-//			$type = $_FILES["profile_image"]["type"];
-//			$ran = rand ();
-//			$ran2 = pathinfo(($_FILES['profile_image']['name']), PATHINFO_FILENAME) . $ran.".";
-//			$target = "images/profile/";
-//			$target = $target . $ran2.$ext;
-//			
-//			# Check Image Restrictions
-//			if (((exif_imagetype($_FILES["profile_image"]["name"]) == "IMAGETYPE_GIF")
-//				|| (exif_imagetype($_FILES["profile_image"]["name"]) == "IMAGETYPE_JPEG")
-//				|| (exif_imagetype($_FILES["profile_image"]["name"]) == "IMAGETYPE_PNG"))
-//				&& in_array($ext, $allowedExts)) {
-//
-//					if (file_exists($target)) {
-//						
-//						# Regenerate Random Number for New Filename
-//						$ran = rand ();
-//						$ran2 = pathinfo(($_FILES['profile_image']['name']), PATHINFO_FILENAME) . $ran.".";
-//						$target = "images/profile/";
-//						$target = $target . $ran2.$ext;
-//					}
-//					
-//					# Resize and crop image
-//					$crop_image = ($_FILES['profile_image']['tmp_name']);
-//					header($_FILES["profile_image"]["type"]);
-//					if ($ext == "gif") {
-//						$myImage = imagecreatefromgif($crop_image);
-//					} elseif (($ext == "jpg") || ($ext == "jpeg")){
-//						$myImage = imagecreatefromjpeg($crop_image);
-//					} elseif ($ext == "png") {
-//						$myImage = imagecreatefrompng($crop_image);
-//					}
-//					list($width, $height) = getimagesize($crop_image);
-//					if ($width > $height) {
-//						$y = 0;
-//						$x = ($width - $height) / 2;
-//						$smallestSide = $height;
-//					} else {
-//						$x = 0;
-//						$y = ($height - $width) / 2;
-//						$smallestSide = $width;
-//					}
-//					$thumbSize = 100;
-//					$thumb = imagecreatetruecolor($thumbSize, $thumbSize);
-//					imagecopyresampled($thumb, $myImage, 0, 0, $x, $y, $thumbSize, $thumbSize, $smallestSide, $smallestSide);
-//					
-//					# Move file to folder
-//					header($_FILES["profile_image"]["type"]);
-//					if ($ext == "gif") {
-//						imagegif($thumb, $target);
-//					} elseif (($ext == "jpeg") || ($ext == "jpg")){
-//						imagejpeg($thumb, $target);
-//					} elseif ($ext == "png") {
-//						imagepng($thumb, $target);
-//					}
-//				
-//					# Send to Database
-//					$_POST['profile_image'] = $ran2.$ext;
-//	
-//			} else {
-//				$error = "Invalid file";
-//			}
-//		}
+					if (file_exists($target)) {
+						
+						# Regenerate Random Number for New Filename
+						$ran = rand ();
+						$ran2 = pathinfo(($_FILES['profile_image']['name']), PATHINFO_FILENAME) . $ran.".";
+						$target = "images/profile/";
+						$target = $target . $ran2.$ext;
+					}
+					
+					# Resize and crop image
+					$crop_image = ($_FILES['profile_image']['tmp_name']);
+					if ($ext == "gif") {
+						header('Content-Type: image/gif');
+						$myImage = imagecreatefromgif($crop_image);
+					} elseif (($ext == "jpg") || ($ext == "jpeg")){
+						header('Content-Type: image/jpg');
+						$myImage = imagecreatefromjpeg($crop_image);
+					} elseif ($ext == "png") {
+						header('Content-Type: image/png');
+						$myImage = imagecreatefrompng($crop_image);
+					}
+					list($width, $height) = getimagesize($crop_image);
+					if ($width > $height) {
+						$y = 0;
+						$x = ($width - $height) / 2;
+						$smallestSide = $height;
+					} else {
+						$x = 0;
+						$y = ($height - $width) / 2;
+						$smallestSide = $width;
+					}
+					$thumbSize = 200;
+					$thumb = imagecreatetruecolor($thumbSize, $thumbSize);
+					imagecopyresized($thumb, $myImage, 0, 0, $x, $y, $thumbSize, $thumbSize, $smallestSide, $smallestSide);
+
+					# Move file to folder
+					if ($ext == "gif") {
+						imagegif($thumb, $target);
+					} elseif (($ext == "jpeg") || ($ext == "jpg")){
+						imagejpeg($thumb, $target);
+					} elseif ($ext == "png") {
+						imagepng($thumb, $target);
+					}
+					
+					#Clear memory of images
+					imagedestroy( $myImage );
+					imagedestroy( $thumb );
+				
+					# Send to Database
+					$_POST['profile_image'] = $ran2.$ext;
+	
+			} else {
+				$error = "Invalid file";
+			}
+		}
 		
 		# Insert this user into the database and redirect to login page
 		$user_id = DB::instance(DB_NAME)->insert('users', $_POST);
@@ -226,20 +196,16 @@
 		$profiles = DB::instance(DB_NAME)->select_rows($q);
 		
 		# Get user animals
-		$q = "
-		
-SELECT 
- user_animal.adult_image,
- user_animal.baby_image,
- user_animal.animal_name,
- animals.species,
- animals.default_image,
- user_animal.breed,
- user_animal.age AS calculated_age
-
-FROM user_animal INNER JOIN animals ON user_animal.animal_ID = animals.animal_ID
-ORDER BY animal_name ASC			
-			";
+		$q = "SELECT 
+				user_animal.adult_image,
+				user_animal.baby_image,
+				user_animal.animal_name,
+				animals.species,
+				animals.default_image,
+				user_animal.breed,
+				user_animal.age AS calculated_age
+			FROM user_animal INNER JOIN animals ON user_animal.animal_ID = animals.animal_ID
+			ORDER BY animal_name ASC";
 
 		# Run posts query, store the results in the variable $posts
 		$inventory = DB::instance(DB_NAME)->select_rows($q);
@@ -250,6 +216,121 @@ ORDER BY animal_name ASC
 	
 		# Render template
 		echo $this->template;
+	}
+	
+	public function edit() {
+
+		# Setup view
+		$this->template->content = View::instance('v_users_edit');
+		$this->template->title   = "Farm Friends: Edit Profile";
+		
+
+		# Get user information
+		$q = 'SELECT 
+				users.first_name,
+				users.last_name,
+				users.profile_image
+			FROM users
+			WHERE users.user_id = '.$this->user->user_id;
+
+		# Run posts query, store the results in the variable $posts
+		$profiles = DB::instance(DB_NAME)->select_rows($q);
+		
+		#Pass data to the view
+    	$this->template->content->profiles  	= $profiles;
+
+		# Render template
+		echo $this->template;
+
+	}
+	
+	public function p_edit() {
+		
+		# More data we want stored with the user
+		$_POST['modified'] = Time::now();       
+		
+		# Check if image added
+		if(isset($_FILES['profile_image']['name']) && ($_FILES['profile_image']['name'] != "")){
+			
+			# Setup Image Restrictions
+			$allowedExts = array("gif", "jpeg", "jpg", "png");
+			$temp = explode(".", $_FILES["profile_image"]["name"]);
+			$extension = end($temp);
+			
+			# Rename File
+			$ext = pathinfo(($_FILES['profile_image']['name']), PATHINFO_EXTENSION); 
+			$ran = rand ();
+			$ran2 = pathinfo(($_FILES['profile_image']['name']), PATHINFO_FILENAME) . $ran.".";
+			$target = "images/profile/";
+			$target = $target . $ran2.$ext;
+			
+			# Check Image Restrictions
+			if (in_array($ext, $allowedExts)) {
+
+					if (file_exists($target)) {
+						
+						# Regenerate Random Number for New Filename
+						$ran = rand ();
+						$ran2 = pathinfo(($_FILES['profile_image']['name']), PATHINFO_FILENAME) . $ran.".";
+						$target = "images/profile/";
+						$target = $target . $ran2.$ext;
+					}
+					
+					# Resize and crop image
+					$crop_image = ($_FILES['profile_image']['tmp_name']);
+					if ($ext == "gif") {
+						header('Content-Type: image/gif');
+						$myImage = imagecreatefromgif($crop_image);
+					} elseif (($ext == "jpg") || ($ext == "jpeg")){
+						header('Content-Type: image/jpg');
+						$myImage = imagecreatefromjpeg($crop_image);
+					} elseif ($ext == "png") {
+						header('Content-Type: image/png');
+						$myImage = imagecreatefrompng($crop_image);
+					}
+					list($width, $height) = getimagesize($crop_image);
+					if ($width > $height) {
+						$y = 0;
+						$x = ($width - $height) / 2;
+						$smallestSide = $height;
+					} else {
+						$x = 0;
+						$y = ($height - $width) / 2;
+						$smallestSide = $width;
+					}
+					$thumbSize = 200;
+					$thumb = imagecreatetruecolor($thumbSize, $thumbSize);
+					imagecopyresized($thumb, $myImage, 0, 0, $x, $y, $thumbSize, $thumbSize, $smallestSide, $smallestSide);
+
+					# Move file to folder
+					if ($ext == "gif") {
+						imagegif($thumb, $target);
+					} elseif (($ext == "jpeg") || ($ext == "jpg")){
+						imagejpeg($thumb, $target);
+					} elseif ($ext == "png") {
+						imagepng($thumb, $target);
+					}
+					
+					#Clear memory of images
+					imagedestroy( $myImage );
+					imagedestroy( $thumb );
+				
+					# Send to Database
+					$_POST['profile_image'] = $ran2.$ext;
+	
+			} else {
+				$error = "Invalid file";
+			}
+		} else { 
+
+			# Repost old profile_image data to record
+			$_POST['profile_image'] = $this->user->profile_image;
+
+		}
+		
+		# Insert this user into the database and redirect to login page
+		$user_id = DB::instance(DB_NAME)->update('users', $_POST);
+		Router::redirect("/users/profile");
 	}
 
 } # end of the class
