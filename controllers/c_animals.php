@@ -19,7 +19,9 @@
 		$this->template->content = View::instance('v_animals_add');
 		$this->template->title   = "Add a New Animal";
 
-		$q = "SELECT species 
+		$q = "SELECT 
+				animal_ID,
+				species 
 			FROM animals 
 			ORDER BY species ASC";
 
@@ -39,6 +41,7 @@
 		# More data we want stored with the user
 		$_POST['created']  = Time::now();
 		$_POST['modified'] = Time::now();       
+		$_POST['user_ID'] = $this->user->user_id;       
 				
 		# Check if baby image added
 		if(isset($_FILES['baby_image']['name']) && ($_FILES['baby_image']['name'] != "")){
@@ -188,14 +191,18 @@
 			}
 		}
 		
-		if(isset($_REQUEST['age']) || strlen(trim($_REQUEST['age'])) !== 0){
-			$errors[] = 'No email provided';
+		if(isset($_REQUEST['age']) && strlen(trim($_REQUEST['age'])) !== 0){
+			if(isset($_REQUEST['age_category']) && ($_REQUEST['age_category'] == 'days')){
+				$set_days = created.getDays() + ($_REQUEST['age']);
+				estimated_born_date.setDays(set_days);	
+			}
+				# Send to Database
+				$_POST['estimated_born_date'] = $estimated_born_date;
 		}
 
 		# Insert this user into the database and redirect to login page
-		$user_id = DB::instance(DB_NAME)->insert('users', $_POST);
+		$user_id = DB::instance(DB_NAME)->insert('user_animal', $_POST);
 		Router::redirect("/users/profile");
 	}
-
 
 } # end of the class

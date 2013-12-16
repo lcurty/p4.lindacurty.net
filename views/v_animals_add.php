@@ -1,6 +1,7 @@
+<h1>Add New Animal</h1>
+
 <form method='POST' name='new_animal_form' action='/animals/p_add'enctype="multipart/form-data"> 
 	<fieldset>
-        <legend>Create New Animal</legend>
 		<?php if(isset($error) && $error == 'blank-fields'): ?>
             <div class='error'>
                 Signup Failed. All fields are required.
@@ -17,7 +18,7 @@
 			<label for="animal_id" class="animal_form" id="animal_id_label">Animal*</label>
 			<select name="animal_id" id="animal_id" >
 				<?php foreach($animal_list as $animals): ?>
-            		<option value="<?=$animals['species']?>"><?=$animals['species']?></option>
+            		<option value="<?=$animals['animal_ID']?>"><?=$animals['species']?></option>
                 <?php endforeach; ?>
             </select>
         </p>
@@ -42,10 +43,11 @@
             	<option value="months">Months</option>
             	<option value="years">Years</option>                
             </select>
+            <span class="note">(If born date not entered.)</span>
         </p>
         <p>
 			<label for="acquired_date" class="animal_form" id="acquired_date_label">Acquired</label>
-			<input type="text" name="acquired_date" id="acquired_date" size="38" />
+			<input type="text" name="acquired_date" id="acquired_date" size="38" />            
         </p>
         <p>
 			<label for="baby_image" class="animal_form" id="baby_image_label">Baby Photo</label>
@@ -63,8 +65,3 @@
 		<p class="note">* Required
 	</fieldset>  
 </form>
-
-<!-- Switch to Sign up Form -->
-<div id="switch-link">
-  <p><a href="/users/login">I have an account ... log me in!</a></p>
-</div>
