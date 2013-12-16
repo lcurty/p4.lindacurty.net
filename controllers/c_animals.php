@@ -200,9 +200,48 @@
 				$_POST['estimated_born_date'] = $estimated_born_date;
 		}
 
+		if(isset($_REQUEST['born_date']) && strlen(trim($_REQUEST['born_date'])) !== 0){
+			$new_date = date('Y-m-d',strtotime($_POST['born_date']));
+
+			# Send to Database
+			$_POST['born_date'] = $new_date;
+		}
+
+		if(isset($_REQUEST['acquired_date']) && strlen(trim($_REQUEST['acquired_date'])) !== 0){
+			$new_date = date('Y-m-d',strtotime($_POST['acquired_date']));
+
+			# Send to Database
+			$_POST['acquired_date'] = $new_date;
+		}
+
 		# Insert this user into the database and redirect to login page
 		$user_id = DB::instance(DB_NAME)->insert('user_animal', $_POST);
 		Router::redirect("/users/profile");
 	}
 
+	public function animal_edit() {
+
+		# Setup view
+		$this->template->content = View::instance('v_users_edit');
+		$this->template->title   = "Farm Friends: Edit Profile";
+		
+
+		# Get user information
+		$q = 'SELECT 
+				users.first_name,
+				users.last_name,
+				users.profile_image
+			FROM users
+			WHERE users.user_id = '.$this->user->user_id;
+
+		# Run posts query, store the results in the variable $posts
+		$profiles = DB::instance(DB_NAME)->select_rows($q);
+		
+		#Pass data to the view
+    	$this->template->content->profiles  	= $profiles;
+
+		# Render template
+		echo $this->template;
+
+	}
 } # end of the class

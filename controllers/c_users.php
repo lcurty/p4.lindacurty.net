@@ -203,7 +203,12 @@
 				animals.species,
 				animals.default_image,
 				user_animal.breed,
-				user_animal.age AS calculated_age
+				user_animal.born_date,
+				user_animal.estimated_born_date,
+				user_animal.acquired_date,
+				CASE WHEN user_animal.born_date NOT LIKE '0000-00-00'
+					THEN DATEDIFF(NOW(),user_animal.born_date)
+				END AS age_days
 			FROM user_animal INNER JOIN animals ON user_animal.animal_ID = animals.animal_ID
 			ORDER BY animal_name ASC";
 
