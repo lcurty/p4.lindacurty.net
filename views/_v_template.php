@@ -9,7 +9,19 @@
 		<link href='http://fonts.googleapis.com/css?family=Rum+Raisin' rel='stylesheet' type='text/css' media="all">
         <link href="/css/styles.css" rel="stylesheet" type="text/css" media="all">	
         <link href="/js/jquery-ui-1.10.3.custom/css/blitzer/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" type="text/css" media="all">
-    
+        
+        <!-- Global JS -->
+        <script src="/js/jquery-1.9.1.js" type="text/javascript"></script>
+        <script src="/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+		<script>
+			$(function() {
+				$( "#born_date" ).datepicker();
+				$( "#acquired_date" ).datepicker();
+				$( "#gone_date" ).datepicker();
+				$( "tr:even").addClass('even');
+			});
+        </script>
+   
         <!-- Controller Specific JS/CSS -->
         <?php if(isset($client_files_head)) echo $client_files_head; ?>
         
@@ -48,17 +60,6 @@
         </div>
         
 
-        <!-- Global JS -->
-        <script src="/js/jquery-1.9.1.js" type="text/javascript"></script>
-        <script src="/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
-		<script>
-			$(function() {
-				$( "#born_date" ).datepicker();
-				$( "#acquired_date" ).datepicker();
-				$( "#gone_date" ).datepicker();
-				$( "tr:even").addClass('even');
-			});
-        </script>
                 
     </body>
 </html>

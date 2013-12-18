@@ -33,6 +33,7 @@
         <thead>
             <tr>
                 <th>&nbsp;</th>
+                <th>&nbsp;</th>
                 <th>Name</th>
                 <th>Animal</th>
                 <th>Breed</th>
@@ -42,6 +43,9 @@
         <tbody>
             <?php foreach($inventory as $animal): ?>  
                 <tr>
+                	<td>
+						<a href="/animals/preview/<?=$animal['user_animal_id']?>" class="button"><img src="../images/magnifying-glass.png" alt="View Animal" /></a>
+                    </td>
                     <td>
                         <?php if(isset($animal['adult_image']) && (!$animal['adult_image'] == "")): ?>
                             <img class="animal_thumb" src="../images/animals/<?=$animal['adult_image']?>" />
@@ -54,7 +58,7 @@
                     <td><?=$animal['animal_name']?></td>
                     <td><?=$animal['species']?></td>
                     <td><?=$animal['breed']?></td>
-                    <td><?=$animal['calculated_age']?></td>
+                    <td><?=$animal['age_days']?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

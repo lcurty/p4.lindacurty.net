@@ -197,6 +197,7 @@
 		
 		# Get user animals
 		$q = "SELECT 
+				user_animal.user_animal_id,
 				user_animal.adult_image,
 				user_animal.baby_image,
 				user_animal.animal_name,
@@ -258,7 +259,7 @@
 		if(isset($_FILES['profile_image']['name']) && ($_FILES['profile_image']['name'] != "")){
 			
 			# Setup Image Restrictions
-			$allowedExts = array("gif", "jpeg", "jpg", "png");
+			$allowedExts = array("gif", "jpeg", "jpg", "png", "GIF", "JPEG", "JPG", "PNG");
 			$temp = explode(".", $_FILES["profile_image"]["name"]);
 			$extension = end($temp);
 			
@@ -283,13 +284,13 @@
 					
 					# Resize and crop image
 					$crop_image = ($_FILES['profile_image']['tmp_name']);
-					if ($ext == "gif") {
+					if (($ext == "gif") || ($ext == "GIF")) {
 						header('Content-Type: image/gif');
 						$myImage = imagecreatefromgif($crop_image);
-					} elseif (($ext == "jpg") || ($ext == "jpeg")){
+					} elseif (($ext == "jpg") || ($ext == "jpeg") || ($ext == "JPG") || ($ext == "JPEG")){
 						header('Content-Type: image/jpg');
 						$myImage = imagecreatefromjpeg($crop_image);
-					} elseif ($ext == "png") {
+					} elseif (($ext == "png") || ($ext == "PNG")) {
 						header('Content-Type: image/png');
 						$myImage = imagecreatefrompng($crop_image);
 					}
@@ -308,11 +309,11 @@
 					imagecopyresized($thumb, $myImage, 0, 0, $x, $y, $thumbSize, $thumbSize, $smallestSide, $smallestSide);
 
 					# Move file to folder
-					if ($ext == "gif") {
+					if (($ext == "gif") || ($ext == "GIF")) {
 						imagegif($thumb, $target);
-					} elseif (($ext == "jpeg") || ($ext == "jpg")){
+					} elseif (($ext == "jpg") || ($ext == "jpeg") || ($ext == "JPG") || ($ext == "JPEG")){
 						imagejpeg($thumb, $target);
-					} elseif ($ext == "png") {
+					} elseif (($ext == "png") || ($ext == "PNG")) {
 						imagepng($thumb, $target);
 					}
 					
@@ -334,7 +335,7 @@
 		}
 		
 		# Insert this user into the database and redirect to login page
-		$user_id = DB::instance(DB_NAME)->update('users', $_POST);
+		DB::instance(DB_NAME)->update('users', $_POST, 'WHERE user_ID = '.$this->user->user_id);
 		Router::redirect("/users/profile");
 	}
 

@@ -48,6 +48,12 @@ header {
 	float: right;
 }
 
+.center {
+	text-align: center;
+	width: 100%;
+	margin: 0px auto;
+}
+
 h1 {
 	font-family: 'Rum Raisin', sans-serif;
 	font-size: 1.5em;
@@ -234,7 +240,7 @@ article time {
 
 .profile_image {
 	float: left;
-	margin: 0px 15px 15px 15px;
+	margin: 0px 62px 15px 42px;
 }
 
 .edit_image {
