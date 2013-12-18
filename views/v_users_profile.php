@@ -9,10 +9,19 @@
         	<img class="circular profile_image" src="../images/profile/stick-figure.jpg" />
         <?php endif; ?>
         
+        
         <h1><?=$profile['first_name']?> <?=$profile['last_name']?>'s Farm</h1>
         
-        <h2>Critter Count</h2>
-    
+        <div>
+            <h2>Critter Count</h2>
+            
+            <?php foreach($categories as $category): ?>  
+                <article class="category">
+                    <img class="animal_thumb" src="../images/animals/default/<?=$category['default_image']?>" />
+                    <span class=""><?=$category['species']?>s</span>: <?=$category['animal_count']?>
+                </article>
+            <?php endforeach; ?>
+		</div>
 	<?php endforeach; ?>
 
 </div>
@@ -58,7 +67,7 @@
                     <td><?=$animal['animal_name']?></td>
                     <td><?=$animal['species']?></td>
                     <td><?=$animal['breed']?></td>
-                    <td><?=$animal['age_days']?></td>
+                    <td><?=$animal['age']?> <?=$animal['age_category']?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

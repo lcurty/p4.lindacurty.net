@@ -17,25 +17,19 @@
 	<p><span class="label">Breed: </span><?=$animal['breed']?></p>
 	<p><span class="label">Name: </span><?=$animal['animal_name']?></p>
 	<p>
-    	<span class="label">Born On: </span>
-		<?php if(isset($animal['born_date']) && (!$animal['born_date'] == "0000-00-00")): ?>
+    	<span class="label">Born On: </span> 
+		<?php if(isset($animal['born_date']) && ($animal['born_date'] !== "00/00/0000")): ?>
 			<?=$animal['born_date']?>
-		<?php elseif(isset($animal['estimated_born_date']) && (!$animal['estimated_born_date'] == "0000-00-00")): ?>
+		<?php elseif(isset($animal['estimated_born_date']) && ($animal['estimated_born_date'] !== "00/00/0000")): ?>
 			<?=$animal['estimated_born_date']?> (estimated)
 		<?php endif; ?>
     </p>
 	<p>
-    	<span class="label">Age: </span>
-		<?php if(isset($animal['age_days']) && (!$animal['age_days'] >= 365)): 
-			$calc_age = $animal['age_days'] / 365; 
-			$display_age = $calc_age.' months';
-			echo($display_age);
-		endif; ?>
-        	<?php echo $display_age ?>
+    	<span class="label">Age: </span><?=$animal['age']?> <?=$animal['age_category']?>
     </p>
 	<p>
     	<span class="label">Acquired: </span>
-		<?php if(isset($animal['estimated_born_date']) && (!$animal['estimated_born_date'] == "0000-00-00")): ?>
+		<?php if(isset($animal['acquired_date']) && ($animal['acquired_date'] !== "00/00/0000")): ?>
 			<?=$animal['acquired_date']?>
 		<?php endif; ?>
 	</p>

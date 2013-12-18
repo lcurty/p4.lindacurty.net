@@ -294,12 +294,18 @@ article time {
 	padding: 4px 10px;
 }
 
-.button {
+.button,
+input.button {
 	background-color: #E0DFDE;
-	padding: 4px 6px;
-	font-size: 0.8em;
+	color: #000000;
+	padding: 5px 6px;
+	font-size: 0.9em;
 	font-weight: bold;
 	margin: 0px 5px 10px 0px;
 	border: 1px solid #514c49;
 	border-radius: 5px;
+}
+
+.button img {
+	margin: 7px 0px -3px 0px;
 }

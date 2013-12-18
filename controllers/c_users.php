@@ -184,6 +184,18 @@
 		$this->template->content = View::instance('v_users_profile');
 		$this->template->title   = "Farm Friends: Farmer Profile";
 		
+		# Get animal categories
+		$q = "SELECT  
+				animals.species,
+				animals.default_image,
+				COUNT(user_animal.user_animal_ID) AS animal_count
+			FROM user_animal INNER JOIN animals ON user_animal.animal_ID = animals.animal_ID
+			WHERE user_animal.user_id = ".$this->user->user_id."
+			GROUP BY animals.species";
+
+		# Run categories query, store the results in the variable $categories
+		$categories = DB::instance(DB_NAME)->select_rows($q);
+
 		# Get user information
 		$q = 'SELECT 
 				users.first_name,
@@ -192,7 +204,7 @@
 			FROM users
 			WHERE users.user_id = '.$this->user->user_id;
 				
-		# Run posts query, store the results in the variable $posts
+		# Run users query, store the results in the variable $profiles
 		$profiles = DB::instance(DB_NAME)->select_rows($q);
 		
 		# Get user animals
@@ -204,13 +216,51 @@
 				animals.species,
 				animals.default_image,
 				user_animal.breed,
-				user_animal.born_date,
-				user_animal.estimated_born_date,
-				user_animal.acquired_date,
-				CASE WHEN user_animal.born_date NOT LIKE '0000-00-00'
-					THEN DATEDIFF(NOW(),user_animal.born_date)
-				END AS age_days
+				DATE_FORMAT(user_animal.born_date, '%m/%d/%Y') AS born_date,
+				DATE_FORMAT(user_animal.estimated_born_date, '%m/%d/%Y') AS estimated_born_date,
+				DATE_FORMAT(user_animal.acquired_date, '%m/%d/%Y') AS acquired_date,
+				DATEDIFF(NOW(),user_animal.born_date) AS age_days,
+				DATEDIFF(NOW(),user_animal.estimated_born_date) AS est_age_days,
+				CASE WHEN user_animal.born_date NOT LIKE '0000-00-00' THEN
+					CASE WHEN DATEDIFF(NOW(),user_animal.born_date) >= 365 THEN
+							ROUND(DATEDIFF(NOW(),user_animal.born_date) / 365)
+							 WHEN DATEDIFF(NOW(),user_animal.born_date) >= 60 THEN
+								ROUND(DATEDIFF(NOW(),user_animal.born_date) / 30)
+							 WHEN DATEDIFF(NOW(),user_animal.born_date) >= 14 THEN
+								ROUND(DATEDIFF(NOW(),user_animal.born_date) / 7)
+							 ELSE DATEDIFF(NOW(),user_animal.born_date)
+						END
+					  WHEN user_animal.estimated_born_date NOT LIKE '0000-00-00' THEN
+							 CASE WHEN DATEDIFF(NOW(),user_animal.estimated_born_date) >= 365 THEN
+							ROUND(DATEDIFF(NOW(),user_animal.estimated_born_date) / 365)
+							 WHEN DATEDIFF(NOW(),user_animal.estimated_born_date) >= 60 THEN
+								ROUND(DATEDIFF(NOW(),user_animal.estimated_born_date) / 30)
+							 WHEN DATEDIFF(NOW(),user_animal.estimated_born_date) >= 14 THEN
+								ROUND(DATEDIFF(NOW(),user_animal.estimated_born_date) / 7)
+							 ELSE DATEDIFF(NOW(),user_animal.estimated_born_date)
+						END
+				END AS age,
+				CASE WHEN user_animal.born_date NOT LIKE '0000-00-00' THEN
+					CASE WHEN DATEDIFF(NOW(),user_animal.born_date) >= 365 THEN
+							'Year(s)'
+							 WHEN DATEDIFF(NOW(),user_animal.born_date) >= 60 THEN
+								'Month(s)'
+							 WHEN DATEDIFF(NOW(),user_animal.born_date) >= 14 THEN
+								'Week(s)'
+							 ELSE 'Day(s)'
+						END
+					  WHEN user_animal.estimated_born_date NOT LIKE '0000-00-00' THEN
+					CASE WHEN DATEDIFF(NOW(),user_animal.estimated_born_date) >= 365 THEN
+							'Year(s)'
+							 WHEN DATEDIFF(NOW(),user_animal.estimated_born_date) >= 60 THEN
+								'Month(s)'
+							 WHEN DATEDIFF(NOW(),user_animal.estimated_born_date) >= 14 THEN
+								'Week(s)'
+							 ELSE 'Day(s)'
+						END
+				END AS age_category
 			FROM user_animal INNER JOIN animals ON user_animal.animal_ID = animals.animal_ID
+			WHERE user_animal.user_ID = ".$this->user->user_id."
 			ORDER BY animal_name ASC";
 
 		# Run posts query, store the results in the variable $posts
@@ -219,6 +269,7 @@
 		#Pass data to the view
     	$this->template->content->profiles  	= $profiles;
 		$this->template->content->inventory 	= $inventory;
+		$this->template->content->categories 	= $categories;
 	
 		# Render template
 		echo $this->template;
