@@ -35,16 +35,16 @@
 	</p>
 	<p>
 		<?php if(isset($animal['adult_image']) && (!$animal['adult_image'] == "")): ?>
-			<img class="animal_thumb" src="/images/animals/<?=$animal['adult_image']?>" />
+			<img class="image animal_thumb" src="/images/animals/<?=$animal['adult_image']?>" />
 		<?php else: ?>
-			<img class="animal_thumb" src="/images/animals/default/<?=$animal['default_image']?>" />
+			<img class="image animal_thumb" src="/images/animals/default/<?=$animal['default_image']?>" />
 		<?php endif; ?>
 	</p>
 	<p>
 		<?php if(isset($animal['baby_image']) && (!$animal['baby_image'] == "")): ?>
-			<img class="animal_thumb" src="/images/animals/<?=$animal['baby_image']?>" />
+			<img class="image animal_thumb" src="/images/animals/<?=$animal['baby_image']?>" />
 		<?php else: ?>
-			<img class="animal_thumb" src="/images/animals/default/<?=$animal['default_image']?>" />
+			<img class="image animal_thumb" src="/images/animals/default/<?=$animal['default_image']?>" />
 		<?php endif; ?>
 	</p>
 	<p>

@@ -64,6 +64,10 @@ h2 {
 	font-size: 1.3em;
 }
 
+.bold {
+	font-weight: bold;
+}
+
 .note {
 	font-style: italic;
 	font-size: .9em;
@@ -119,6 +123,36 @@ a:link, a:visited, a:hover, a:active {
 }
 
 /* Animal Inventory */
+.critter_count {
+	float: right;
+}
+
+.category {
+	width: 200px;
+	border: 1px solid #800000;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius: 5px;
+	border-spacing: 0px;
+	margin: 5px;
+	padding: 1px;
+	display: inline-table;
+	vertical-align: middle;
+}
+
+.users_users {
+	width: 300px;
+	border: 1px solid #800000;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius: 5px;
+	border-spacing: 0px;
+	margin: 5px;
+	padding: 1px;
+	display: inline-table;
+	vertical-align: middle;
+}
+
 #search_farm {
 	float:left;
 	width: 275px;
@@ -231,16 +265,18 @@ article time {
 
 /* Images */
 
-.circular {
-	border-radius: 150px;
-	-webkit-border-radius: 150px;
-	-moz-border-radius: 150px;
+.image {
+	border-radius: 15px;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
 	border: 1px solid #bfbdb2;
 }
 
 .profile_image {
 	float: left;
 	margin: 0px 62px 15px 42px;
+	width: 200px;
+	height: 200px;
 }
 
 .edit_image {
@@ -251,30 +287,27 @@ article time {
 }
 
 .animal_thumb {
+	margin: 5px;
 	width: 50px;
 	height: 50px;
-	border-radius: 15px;
-	-webkit-border-radius: 15px;
-	-moz-border-radius: 15px;
-	border: 1px solid #bfbdb2;
-	margin: 5px;
+	vertical-align: middle;
 }
 
-.my_photo .circular {
+.my_photo {
 	width: 150px;
 	height: 150px;
 	margin: 10px;
 }
 
-.posts .circular {
-	width: 75px;
-	height: 75px;
+.posts {
 	float: left;
 	margin: 5px 10px 10px 0px;
+	width: 75px;
+	height: 75px;
 }
 
-.comments .circular,
-.users_table .circular {
+.comments,
+.users {
 	width: 60px;
 	height: 60px;
 	margin: -7px 0px 0px;
@@ -286,14 +319,14 @@ article time {
 
 /* User List */
 
-.users_table {
+/*.users_table {
 	border: 0px;
 }
 
 .users_table td {
 	padding: 4px 10px;
 }
-
+*/
 .button,
 input.button {
 	background-color: #E0DFDE;
