@@ -38,10 +38,11 @@
 	<h2>Filter Animal List</h2>
     <form name="animal_filter">
         <fieldset>
-            <p><label id='animal'>Animal</label><br><input type='text' name='animal'></p>
+            <p><label id='animal'>Animal</label><br><input type='text' id="search" name='animal'></p>
             <p><label id='breed'>Breed</label><br><input type='text' name='breed'></p>
             <p><label id='name'>Name</label><br><input type='text' name='name'></p>
             <!--<p><label id='start_date'>Date of First Payment</label><br><input type='text' name='start_date' id="datepicker"></p>-->
+            <p>Add Clear Form Button?</p>
         </fieldset>
     </form>
 

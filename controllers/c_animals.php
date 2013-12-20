@@ -39,9 +39,9 @@
 	public function p_add() {
 		
 		# More data we want stored with the user
-		$_POST['created']  = Time::now();
-		$_POST['modified'] = Time::now();       
-		$_POST['user_ID'] = $this->user->user_id;       
+		$_POST['created']  = date('Y-m-d');
+		$_POST['modified'] = date('Y-m-d');       
+		$_POST['user_ID']  = $this->user->user_id;       
 				
 		# Check if baby image added
 		if(isset($_FILES['baby_image']['name']) && ($_FILES['baby_image']['name'] != "")){
@@ -192,10 +192,14 @@
 		}
 		
 		if(isset($_REQUEST['age']) && strlen(trim($_REQUEST['age'])) !== 0){
-			if(isset($_REQUEST['age_category']) && ($_REQUEST['age_category'] == 'days')){
-				$set_days = created.getDays() + ($_REQUEST['age']);
-				estimated_born_date.setDays(set_days);	
-			}
+			if(isset($_REQUEST['age_category']) && ($_REQUEST['age_category'] == 'years'))
+				$estimated_born_date = date('Y-m-d', strtotime('-'.$_REQUEST['age'].' years'));	
+			elseif(isset($_REQUEST['age_category']) && ($_REQUEST['age_category'] == 'months'))
+				$estimated_born_date = date('Y-m-d', strtotime('-'.$_REQUEST['age'].' months'));	
+			elseif(isset($_REQUEST['age_category']) && ($_REQUEST['age_category'] == 'weeks'))
+				$estimated_born_date = date('Y-m-d', strtotime('-'.$_REQUEST['age'].' weeks'));	
+			elseif(isset($_REQUEST['age_category']) && ($_REQUEST['age_category'] == 'days'))
+				$estimated_born_date = date('Y-m-d', strtotime('-'.$_REQUEST['age'].' days'));	
 				# Send to Database
 				$_POST['estimated_born_date'] = $estimated_born_date;
 		}
@@ -213,9 +217,30 @@
 			# Send to Database
 			$_POST['acquired_date'] = $new_date;
 		}
+		
+		# Create record for post
+		$q = "SELECT species
+			  FROM animals
+			  WHERE animal_ID = ".$_POST['animal_id'];
+		$this_animal = DB::instance(DB_NAME)->select_field($q);
+			  
+		$post_animal['created']  = Time::now();
+		$post_animal['modified'] = Time::now();
+		$post_animal['user_id']  = $this->user->user_id;
+		$post_animal['content']  = "I just added a new ".$this_animal." to my farm!";
 
 		# Insert this user into the database and redirect to login page
 		$user_id = DB::instance(DB_NAME)->insert('user_animal', $_POST);
+		
+		# Get Last Inserted ID
+		$q = "SELECT user_animal_ID
+			  FROM user_animal
+			  WHERE user_ID = ".$this->user->user_id."
+			  ORDER BY user_animal_ID DESC
+			  LIMIT 1";
+		$this_animal = DB::instance(DB_NAME)->select_field($q);
+
+		$post_id = DB::instance(DB_NAME)->insert('posts', $post_animal);
 		Router::redirect("/users/profile");
 	}
 	
@@ -379,7 +404,7 @@
 
 	}
 	
-	public function p_animal_edit($animal_ID) {
+	public function p_animal_edit($user_animal_ID) {
 		
 		# More data we want stored with the user
 		$_POST['modified'] = Time::now();       
@@ -558,10 +583,35 @@
 			# Send to Database
 			$_POST['acquired_date'] = $new_date;
 		}
+		
+				# Create record for post
+		if(isset($_REQUEST['animal_name']) && strlen(trim($_REQUEST['animal_name'])) !== 0 ) {
+			$this_animal = $_POST['animal_name'];
+		} else {
+			$q = "SELECT species
+				  FROM animals
+				  WHERE animal_ID = ".$_POST['animal_id'];
+			$this_animal = DB::instance(DB_NAME)->select_field($q);
+			$this_animal = "a ".$this_animal;
+		}
+		$post_animal['created']  = Time::now();
+		$post_animal['modified'] = Time::now();
+		$post_animal['user_id']  = $this->user->user_id;
+		$post_animal['content']  = "I just updated information about ".$this_animal."!";
 
 		# Insert this user into the database and redirect to login page
-		$user_id = DB::instance(DB_NAME)->update('user_animal', $_POST, 'WHERE user_animal_ID = '.$animal_ID);
-		Router::redirect("/animals/preview/".$animal_ID);
+		$user_id = DB::instance(DB_NAME)->update('user_animal', $_POST, 'WHERE user_animal_ID = '.$user_animal_ID);
+		
+		# Get Last Inserted ID
+		$q = "SELECT user_animal_ID
+			  FROM user_animal
+			  WHERE user_ID = ".$this->user->user_id."
+			  ORDER BY modified DESC
+			  LIMIT 1";
+		$this_animal = DB::instance(DB_NAME)->select_field($q);
+
+		$post_id = DB::instance(DB_NAME)->insert('posts', $post_animal);
+		Router::redirect("/animals/preview/".$user_animal_ID);
 	}
 
 } # end of the class
