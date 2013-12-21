@@ -13,6 +13,19 @@
 		<?php endif; ?>
 	</h1>
     
+    <div id="animal_photos">
+    
+            <?php if(isset($animal['baby_image']) && (!$animal['baby_image'] == "")): ?>
+                <img class="image" src="/images/animals/<?=$animal['baby_image']?>" />
+            <?php endif; ?>
+            <?php if(isset($animal['adult_image']) && (!$animal['adult_image'] == "")): ?>
+                <img class="image" src="/images/animals/<?=$animal['adult_image']?>" />
+            <?php endif; ?>
+            <?php if((!isset($animal['baby_image']) || ($animal['baby_image'] == "")) && (!isset($animal['adult_image']) || ($animal['adult_image'] == ""))): ?>
+                <img class="image" src="/images/animals/default/<?=$animal['default_image']?>" />
+            <?php endif; ?>
+    </div>
+    
 	<p><span class="label">Animal: </span><?=$animal['species']?></p>
 	<p><span class="label">Breed: </span><?=$animal['breed']?></p>
 	<p><span class="label">Name: </span><?=$animal['animal_name']?></p>
@@ -34,26 +47,13 @@
 		<?php endif; ?>
 	</p>
 	<p>
-		<?php if(isset($animal['adult_image']) && (!$animal['adult_image'] == "")): ?>
-			<img class="image animal_thumb" src="/images/animals/<?=$animal['adult_image']?>" />
-		<?php else: ?>
-			<img class="image animal_thumb" src="/images/animals/default/<?=$animal['default_image']?>" />
-		<?php endif; ?>
-	</p>
-	<p>
-		<?php if(isset($animal['baby_image']) && (!$animal['baby_image'] == "")): ?>
-			<img class="image animal_thumb" src="/images/animals/<?=$animal['baby_image']?>" />
-		<?php else: ?>
-			<img class="image animal_thumb" src="/images/animals/default/<?=$animal['default_image']?>" />
-		<?php endif; ?>
-	</p>
-	<p>
     	<span class="label">Notes: </span><br />
 		<?=$animal['notes']?>
     </p>
     
     <div class="center">
-        <a href="/animals/animal_edit/<?=$animal['user_animal_ID']?>" class="button">Edit Record</a>
+        <a href="/animals/animal_edit/<?=$animal['user_animal_ID']?>" class="button">Edit Animal</a>
+        <a href="/animals/p_animal_delete/<?=$animal['user_animal_ID']?>" class="button">Delete Animal</a>
         <a href="/users/profile" class="button">Back To Profile</a>
 	</div>
     

@@ -39,8 +39,8 @@
 	public function p_add() {
 		
 		# More data we want stored with the user
-		$_POST['created']  = date('Y-m-d');
-		$_POST['modified'] = date('Y-m-d');       
+		$_POST['created']  = Time::now();
+		$_POST['modified'] = Time::now();       
 		$_POST['user_ID']  = $this->user->user_id;       
 				
 		# Check if baby image added
@@ -239,6 +239,7 @@
 			  ORDER BY user_animal_ID DESC
 			  LIMIT 1";
 		$this_animal = DB::instance(DB_NAME)->select_field($q);
+		$post_animal['user_animal_ID'] = $this_animal;
 
 		$post_id = DB::instance(DB_NAME)->insert('posts', $post_animal);
 		Router::redirect("/users/profile");
@@ -584,20 +585,20 @@
 			$_POST['acquired_date'] = $new_date;
 		}
 		
-				# Create record for post
+		# Create record for post
 		if(isset($_REQUEST['animal_name']) && strlen(trim($_REQUEST['animal_name'])) !== 0 ) {
-			$this_animal = $_POST['animal_name'];
+			$species = $_POST['animal_name'];
 		} else {
 			$q = "SELECT species
 				  FROM animals
 				  WHERE animal_ID = ".$_POST['animal_id'];
-			$this_animal = DB::instance(DB_NAME)->select_field($q);
-			$this_animal = "a ".$this_animal;
+			$species = DB::instance(DB_NAME)->select_field($q);
+			$species = "a ".$species;
 		}
 		$post_animal['created']  = Time::now();
 		$post_animal['modified'] = Time::now();
 		$post_animal['user_id']  = $this->user->user_id;
-		$post_animal['content']  = "I just updated information about ".$this_animal."!";
+		$post_animal['content']  = "I just updated information about ".$species."!";
 
 		# Insert this user into the database and redirect to login page
 		$user_id = DB::instance(DB_NAME)->update('user_animal', $_POST, 'WHERE user_animal_ID = '.$user_animal_ID);
@@ -609,9 +610,18 @@
 			  ORDER BY modified DESC
 			  LIMIT 1";
 		$this_animal = DB::instance(DB_NAME)->select_field($q);
+		$post_animal['user_animal_ID'] = $this_animal;
 
 		$post_id = DB::instance(DB_NAME)->insert('posts', $post_animal);
 		Router::redirect("/animals/preview/".$user_animal_ID);
 	}
+	
+	public function p_animal_delete($user_animal_ID) {
+		# Insert this user into the database and redirect to login page
+		$delete_animal['is_deleted'] = 1;
 
+		$user_animal_ID = DB::instance(DB_NAME)->update('user_animal', $delete_animal, 'WHERE user_animal_ID = '.$user_animal_ID);
+		Router::redirect("/users/profile");
+
+	}
 } # end of the class

@@ -314,6 +314,14 @@ article time {
 	height: 60px;
 }
 
+#animal_photos {
+	float: right;
+}
+
+#animal_photos img {
+	margin: 0px 20px 20px 20px;
+}
+
 /* User List */
 
 /*.users_table {

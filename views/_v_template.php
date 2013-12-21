@@ -13,6 +13,7 @@
         <!-- Global JS -->
         <script src="/js/jquery-1.9.1.js" type="text/javascript"></script>
         <script src="/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+        <script src="/js/filter.js" type="text/javascript"></script>
 		<script>
 			$(function() {
 				$( "#born_date" ).datepicker();
@@ -21,7 +22,6 @@
 				$( "tr:even").addClass('even');
 			});
         </script>
-        <script src="/js/filter.js" type="text/javascript"></script>
    
         <!-- Controller Specific JS/CSS -->
         <?php if(isset($client_files_head)) echo $client_files_head; ?>

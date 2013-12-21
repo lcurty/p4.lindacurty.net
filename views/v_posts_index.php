@@ -21,7 +21,19 @@
         
         <div class="user_post">
         
-            <p><?=$post['content']?></p>
+            <p>
+				<?php if(isset($post['user_animal_id']) && (!$post['user_animal_id'] == "")): ?>
+					<?php if(isset($post['adult_image']) && (!$post['adult_image'] == "")): ?>
+                        <img class="image animal_thumb" src="/images/animals/<?=$post['adult_image']?>" />
+                    <?php elseif(isset($post['baby_image']) && (!$post['baby_image'] == "")): ?>
+                        <img class="image animal_thumb" src="/images/animals/<?=$post['baby_image']?>" />
+                    <?php else: ?>
+                        <img class="image animal_thumb" src="/images/animals/default/<?=$post['default_image']?>" />
+                    <?php endif; ?>
+                <?php endif; ?>
+
+				<?=$post['content']?>
+            </p>
             
             <time datetime="<?=Time::display($post['created'],'Y-m-d G:i')?>">
 				<?=Time::display($post['created'])?>

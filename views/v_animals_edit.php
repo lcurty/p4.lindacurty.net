@@ -39,23 +39,23 @@
 			<input type="text" name="acquired_date" id="acquired_date" value="<?php if($animal['acquired_date'] !== '00/00/0000'): ?><?=$animal['acquired_date']?><?php endif; ?>" size="38" />            
         </p>
         <p>
+			<label for="baby_image" class="animal_form" id="baby_image_label">Update Baby Photo</label>
+			<input type="file" name="baby_image" id="baby_image" size="38" /><br />
 			<?php if(isset($animal['baby_image']) && (!$animal['baby_image'] == "")): ?>
                 <img class="image edit_image" src="/images/animals/<?=$animal['baby_image']?>" />
             <?php else: ?>
                 <img class="image edit_image" src="/images/animals/default/<?=$animal['default_image']?>" />
             <?php endif; ?>
-			<label for="baby_image" class="animal_form" id="baby_image_label">Upload New Baby Photo</label>
-			<input type="file" name="baby_image" id="baby_image" size="38" />
             <hr class="clear" />
         </p>
         <p>
+			<label for="adult_image" class="animal_form" id="adult_image_label">Update Adult Photo</label>
+			<input type="file" name="adult_image" id="adult_image" size="38" /><br />
 			<?php if(isset($animal['adult_image']) && (!$animal['adult_image'] == "")): ?>
                 <img class="image edit_image" src="/images/animals/<?=$animal['adult_image']?>" />
             <?php else: ?>
                 <img class="image edit_image" src="/images/animals/default/<?=$animal['default_image']?>" />
             <?php endif; ?>
-			<label for="adult_image" class="animal_form" id="adult_image_label">Upload New Adult Photo</label>
-			<input type="file" name="adult_image" id="adult_image" size="38" />
             <hr class="clear" />
         </p>
         <p>

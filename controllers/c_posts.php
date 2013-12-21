@@ -21,42 +21,48 @@
 		
 				# Query posts
 				$q = 'SELECT 
-								posts.content,
-								posts.created,
-								posts.user_id AS post_user_id,
-								posts.post_id,
-								users_users.user_id AS follower_id,
-								users.first_name,
-								users.last_name,
-								users.profile_image
-							FROM posts
-								LEFT JOIN users_users ON posts.user_id = users_users.user_id_followed
-								INNER JOIN users ON posts.user_id = users.user_id
-							WHERE users_users.user_id = '.$this->user->user_id.' 
-								OR posts.user_id = '.$this->user->user_id.'
-							ORDER BY posts.created DESC';
+						posts.content,
+						posts.created,
+						posts.user_id AS post_user_id,
+						posts.post_id,
+						users_users.user_id AS follower_id,
+						users.first_name,
+						users.last_name,
+						users.profile_image,
+						posts.user_animal_id,
+						user_animal.baby_image,
+						user_animal.adult_image,
+						animals.default_image
+					FROM posts
+						LEFT JOIN users_users ON posts.user_id = users_users.user_id_followed
+						INNER JOIN users ON posts.user_id = users.user_id
+						LEFT JOIN user_animal ON posts.user_animal_id = user_animal.user_animal_id
+						LEFT JOIN animals ON user_animal.animal_id = animals.animal_ID
+					WHERE users_users.user_id = '.$this->user->user_id.' 
+						OR posts.user_id = '.$this->user->user_id.'
+					ORDER BY posts.created DESC';
 						
 				# Run posts query, store the results in the variable $posts
 				$posts = DB::instance(DB_NAME)->select_rows($q);
 		
 				# Query comments
 				$q = 'SELECT 
-								comments.comment,
-								comments.created,
-								comments.post_id,
-								users.first_name,
-								users.last_name,
-								users.profile_image
-							FROM comments
-								LEFT JOIN posts ON comments.post_id = posts.post_id
-								LEFT JOIN users ON comments.user_id = users.user_id';
+						comments.comment,
+						comments.created,
+						comments.post_id,
+						users.first_name,
+						users.last_name,
+						users.profile_image
+					FROM comments
+						LEFT JOIN posts ON comments.post_id = posts.post_id
+						LEFT JOIN users ON comments.user_id = users.user_id';
 		
 				# Run the query, store the results in the variable $comments
 				$comments = DB::instance(DB_NAME)->select_rows($q);
 		
 				# Count of comments per post - used for styling
 				$q = 'SELECT DISTINCT(post_id)
-							FROM comments';
+					FROM comments';
 		
 				# Run the query, store the results in the variable $comment_count
 				$has_comment = DB::instance(DB_NAME)->select_rows($q);

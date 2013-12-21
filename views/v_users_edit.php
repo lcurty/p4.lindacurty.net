@@ -12,13 +12,13 @@
                 <input type="text" name="last_name" id="last_name" value="<?=$profile['last_name']?>" size="38" />
             </p>
             <p>
+                <label for="profile_image" id="image_label">Upload New Photo</label>
+                <input type="file" name="profile_image" id="profile_image" size="38" /><br />
                 <?php if(isset($profile['profile_image']) && (!$profile['profile_image'] == "")): ?>
-                    <img class="circular edit_image" src="../images/profile/<?=$profile['profile_image']?>" />
+                    <img class="image edit_image" src="/images/profile/<?=$profile['profile_image']?>" />
                 <?php else: ?>
-                    <img class="circular edit_image" src="../images/profile/stick-figure.jpg" />
+                    <img class="image edit_image" src="/images/profile/stick-figure.jpg" />
                 <?php endif; ?>
-                <label for="profile_image" id="image_label">Upload New Photo</label><br />
-                <input type="file" name="profile_image" id="profile_image" size="38" />
                 <hr class="clear" />
             </p>
             <p class="center"><input type="submit" class="button" id="submit_btn" value="Update" /></p>

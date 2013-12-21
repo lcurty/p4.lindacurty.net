@@ -191,6 +191,7 @@
 				COUNT(user_animal.user_animal_ID) AS animal_count
 			FROM user_animal INNER JOIN animals ON user_animal.animal_ID = animals.animal_ID
 			WHERE user_animal.user_id = ".$this->user->user_id."
+				AND user_animal.is_deleted = 0
 			GROUP BY animals.species";
 
 		# Run categories query, store the results in the variable $categories
@@ -261,6 +262,7 @@
 				END AS age_category
 			FROM user_animal INNER JOIN animals ON user_animal.animal_ID = animals.animal_ID
 			WHERE user_animal.user_ID = ".$this->user->user_id."
+				AND user_animal.is_deleted = 0
 			ORDER BY animal_name ASC";
 
 		# Run posts query, store the results in the variable $posts

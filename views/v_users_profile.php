@@ -36,13 +36,10 @@
 
 <div id="search_farm">
 	<h2>Filter Animal List</h2>
+    <p>Enter any term that you would like to filter on. The animal table will filter based on a match in any part of the row. Deleting any text in the filter box will reset the table &ndash; displaying all animals.</p>
     <form name="animal_filter">
         <fieldset>
-            <p><label id='animal'>Animal</label><br><input type='text' id="search" name='animal'></p>
-            <p><label id='breed'>Breed</label><br><input type='text' name='breed'></p>
-            <p><label id='name'>Name</label><br><input type='text' name='name'></p>
-            <!--<p><label id='start_date'>Date of First Payment</label><br><input type='text' name='start_date' id="datepicker"></p>-->
-            <p>Add Clear Form Button?</p>
+            <p><label id='filter_label'>Filter Terms</label><input type='text' id="search" name='filter'></p>
         </fieldset>
     </form>
 
