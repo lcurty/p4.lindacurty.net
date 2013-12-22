@@ -20,13 +20,13 @@
         <div id="animal_photos">
         
                 <?php if(isset($animal['baby_image']) && (!$animal['baby_image'] == "")): ?>
-                    <img class="image" src="/images/animals/<?=$animal['baby_image']?>" />
+                    <img class="image" src="/images/animals/<?=$animal['baby_image']?>" alt="Baby Image" />
                 <?php endif; ?>
                 <?php if(isset($animal['adult_image']) && (!$animal['adult_image'] == "")): ?>
-                    <img class="image" src="/images/animals/<?=$animal['adult_image']?>" />
+                    <img class="image" src="/images/animals/<?=$animal['adult_image']?>" alt="Adult Image" />
                 <?php endif; ?>
                 <?php if((!isset($animal['baby_image']) || ($animal['baby_image'] == "")) && (!isset($animal['adult_image']) || ($animal['adult_image'] == ""))): ?>
-                    <img class="image" src="/images/animals/default/<?=$animal['default_image']?>" />
+                    <img class="image" src="/images/animals/default/<?=$animal['default_image']?>" alt="Default Animal Image" />
                 <?php endif; ?>
         </div>
         

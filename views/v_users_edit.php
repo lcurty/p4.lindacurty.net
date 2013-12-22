@@ -15,9 +15,9 @@
                 <label for="profile_image" id="image_label">Upload New Photo</label>
                 <input type="file" name="profile_image" id="profile_image" size="38" /><br />
                 <?php if(isset($profile['profile_image']) && (!$profile['profile_image'] == "")): ?>
-                    <img class="image edit_image" src="/images/profile/<?=$profile['profile_image']?>" />
+                    <img class="image edit_image" src="/images/profile/<?=$profile['profile_image']?>" alt="Profile Image" />
                 <?php else: ?>
-                    <img class="image edit_image" src="/images/profile/stick-figure.jpg" />
+                    <img class="image edit_image" src="/images/profile/stick-figure.jpg" alt="Default Profile Image" />
                 <?php endif; ?>
                 <hr class="clear" />
             </p>

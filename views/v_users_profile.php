@@ -13,7 +13,7 @@
                 
                 <?php foreach($categories as $category): ?>  
                     <div class="category">
-                        <img class="image animal_thumb" src="/images/animals/default/<?=$category['default_image']?>" />
+                        <img class="image animal_thumb" src="/images/animals/default/<?=$category['default_image']?>" alt="Default <?=$category['species']?> Image" />
                         <span class="bold"><?=$category['species']?>s</span>: <?=$category['animal_count']?>
                     </div>
                 <?php endforeach; ?>
@@ -22,9 +22,9 @@
 		</div>
     
 		<?php if(isset($profile['profile_image']) && (!$profile['profile_image'] == "")): ?>
-        	<img class="image profile_image" src="/images/profile/<?=$profile['profile_image']?>" />
+        	<img class="image profile_image" src="/images/profile/<?=$profile['profile_image']?>" alt="Profile Image" />
         <?php else: ?>
-        	<img class="image profile_image" src="/images/profile/stick-figure.jpg" />
+        	<img class="image profile_image" src="/images/profile/stick-figure.jpg" alt="Default Profile Image" />
         <?php endif; ?>
         
 	<?php endforeach; ?>
@@ -61,11 +61,11 @@
                         </td>
                         <td>
                             <?php if(isset($animal['adult_image']) && (!$animal['adult_image'] == "")): ?>
-                                <img class="image animal_thumb" src="/images/animals/<?=$animal['adult_image']?>" />
+                                <img class="image animal_thumb" src="/images/animals/<?=$animal['adult_image']?>" alt="Adult Animal Image" />
                             <?php elseif(isset($animal['baby_image']) && (!$animal['baby_image'] == "")): ?>
-                                <img class="image animal_thumb" src="/images/animals/<?=$animal['baby_image']?>" />
+                                <img class="image animal_thumb" src="/images/animals/<?=$animal['baby_image']?>" alt="Baby Animal Image" />
                             <?php else: ?>
-                                <img class="image animal_thumb" src="/images/animals/default/<?=$animal['default_image']?>" />
+                                <img class="image animal_thumb" src="/images/animals/default/<?=$animal['default_image']?>" alt="Default Animal Image" />
                             <?php endif; ?>
                         </td>
                         <td><?=$animal['animal_name']?></td>
@@ -99,9 +99,9 @@
                 <div>
                     <a href="/users/profile/<?=$connection['user_id']?>">
                         <?php if(isset($connection['profile_image']) && (!$connection['profile_image'] == "")): ?>
-                            <img class="image users" src="/images/profile/<?=$connection['profile_image']?>" />
+                            <img class="image users" src="/images/profile/<?=$connection['profile_image']?>" alt="Profile Image" />
                         <?php else: ?>
-                            <img class="image users" src="/images/profile/stick-figure.jpg" />
+                            <img class="image users" src="/images/profile/stick-figure.jpg" alt="Default Profile Image" />
                         <?php endif; ?>
                     </a>
                     &nbsp;

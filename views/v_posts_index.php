@@ -5,9 +5,9 @@
 <div class="post_add">
 
 	<?php if(isset($user_image) && (!$user_image == "")): ?>
-        <img class="image feed_image" src="/images/profile/<?=$user_image?>" />
+        <img class="image feed_image" src="/images/profile/<?=$user_image?>" alt="Profile Image" />
     <?php else: ?>
-        <img class="image feed_image" src="/images/profile/stick-figure.jpg" />
+        <img class="image feed_image" src="/images/profile/stick-figure.jpg" alt="Default Profile Image" />
     <?php endif; ?>
     
     <?php include 'v_posts_add.php' ?>
@@ -27,9 +27,9 @@
         
         	<a href="/users/profile/<?=$post['post_user_id']?>">
 				<?php if(isset($post['profile_image']) && (!$post['profile_image'] == "")): ?>
-                    <img class="image posts_thumb" src="/images/profile/<?=$post['profile_image']?>" />
+                    <img class="image posts_thumb" src="/images/profile/<?=$post['profile_image']?>" alt="Profile Image" />
                 <?php else: ?>
-                    <img class="image posts_thumb" src="/images/profile/stick-figure.jpg" />
+                    <img class="image posts_thumb" src="/images/profile/stick-figure.jpg" alt="Default Profile Image" />
                 <?php endif; ?>
             </a>
             
@@ -40,11 +40,11 @@
                 <p>
                     <?php if(isset($post['user_animal_id']) && (!$post['user_animal_id'] == "")): ?>
                         <?php if(isset($post['adult_image']) && (!$post['adult_image'] == "")): ?>
-                            <img class="image animal_thumb" src="/images/animals/<?=$post['adult_image']?>" />
+                            <img class="image animal_thumb" src="/images/animals/<?=$post['adult_image']?>" alt="Baby Image" />
                         <?php elseif(isset($post['baby_image']) && (!$post['baby_image'] == "")): ?>
-                            <img class="image animal_thumb" src="/images/animals/<?=$post['baby_image']?>" />
+                            <img class="image animal_thumb" src="/images/animals/<?=$post['baby_image']?>" alt="Adult Image" />
                         <?php else: ?>
-                            <img class="image animal_thumb" src="/images/animals/default/<?=$post['default_image']?>" />
+                            <img class="image animal_thumb" src="/images/animals/default/<?=$post['default_image']?>" alt="Defualt Animal Image" />
                         <?php endif; ?>
                     <?php endif; ?>
     
@@ -77,9 +77,9 @@
                             <article class="comments">
                             
                                 <?php if(isset($comment['profile_image']) && (!$comment['profile_image'] == "")): ?>
-                                    <img class="image comment_thumb" src="/images/profile/<?=$comment['profile_image']?>" />
+                                    <img class="image comment_thumb" src="/images/profile/<?=$comment['profile_image']?>" alt="Profile Image" />
                                 <?php else: ?>
-                                    <img class="image comment_thumb" src="/images/profile/stick-figure.jpg" />
+                                    <img class="image comment_thumb" src="/images/profile/stick-figure.jpg" alt="Defualt Profile Image" />
                                 <?php endif; ?>
                                 
                                 <div class="post_comment">

@@ -40,7 +40,7 @@
     <body>  
 
         <header>
-            <a href='/'><img src="/images/farm-friends-logo.png"></a>
+            <a href='/'><img src="/images/farm-friends-logo.png" alt="Farm Friends Logo"></a>
         </header>
         
         <div id="page">

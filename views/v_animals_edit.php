@@ -50,9 +50,9 @@
                 <label for="baby_image" class="animal_form" id="baby_image_label">Update Baby Photo</label>
                 <input type="file" name="baby_image" id="baby_image" size="38" /><br />
                 <?php if(isset($animal['baby_image']) && (!$animal['baby_image'] == "")): ?>
-                    <img class="image edit_image" src="/images/animals/<?=$animal['baby_image']?>" />
+                    <img class="image edit_image" src="/images/animals/<?=$animal['baby_image']?>" alt="Baby Image" />
                 <?php else: ?>
-                    <img class="image edit_image" src="/images/animals/default/<?=$animal['default_image']?>" />
+                    <img class="image edit_image" src="/images/animals/default/<?=$animal['default_image']?>" alt="Default Animal Image" />
                 <?php endif; ?>
                 <hr class="clear" />
             </p>
@@ -60,9 +60,9 @@
                 <label for="adult_image" class="animal_form" id="adult_image_label">Update Adult Photo</label>
                 <input type="file" name="adult_image" id="adult_image" size="38" /><br />
                 <?php if(isset($animal['adult_image']) && (!$animal['adult_image'] == "")): ?>
-                    <img class="image edit_image" src="/images/animals/<?=$animal['adult_image']?>" />
+                    <img class="image edit_image" src="/images/animals/<?=$animal['adult_image']?>" alt="Adult Image" />
                 <?php else: ?>
-                    <img class="image edit_image" src="/images/animals/default/<?=$animal['default_image']?>" />
+                    <img class="image edit_image" src="/images/animals/default/<?=$animal['default_image']?>" alt="Default Animal Image" />
                 <?php endif; ?>
                 <hr class="clear" />
             </p>
