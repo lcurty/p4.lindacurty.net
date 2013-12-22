@@ -16,7 +16,6 @@
         <script src="/js/jquery-1.9.1.js" type="text/javascript"></script>
         <script src="/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
         <script src="/js/filter.js" type="text/javascript"></script>
-        <script src="/js/jscroll/jquery.jscroll.js" type="text/javascript"></script>
 		<script>
 			$(function() {
 				$( "#born_date" ).datepicker();

@@ -38,9 +38,14 @@ Features of the Application
 
 JavaScript Components
 ---------------------
-- Filter for a user's list of animals (filters on any column or columns in the table by typing in one field)
+- filter.js - Filter for a user's list of animals (filters on any column or columns in the table by typing in one field)
 - Datepicker (via JQuery UI)
 
 
 Additional Information for Graders
 ----------------------------------
+- There is no admin area.
+- The site intentionally routes to the user profile rather than the feed because the inventory component is the 
+  primary component of the application.
+- User Jim Doe is a good example of someone who has added a lot of animals
+- Linda Curty is, of course, my profile
