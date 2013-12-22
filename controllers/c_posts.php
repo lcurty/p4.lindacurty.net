@@ -21,25 +21,27 @@
 		
 				# Query posts
 				$q = 'SELECT 
+						DISTINCT(posts.post_id) AS post_id,
 						posts.content,
 						posts.created,
 						posts.user_id AS post_user_id,
-						posts.post_id,
-						users_users.user_id AS follower_id,
 						users.first_name,
 						users.last_name,
 						users.profile_image,
 						posts.user_animal_id,
 						user_animal.baby_image,
 						user_animal.adult_image,
+						user_animal.is_deleted,
 						animals.default_image
 					FROM posts
 						LEFT JOIN users_users ON posts.user_id = users_users.user_id_followed
 						INNER JOIN users ON posts.user_id = users.user_id
 						LEFT JOIN user_animal ON posts.user_animal_id = user_animal.user_animal_id
 						LEFT JOIN animals ON user_animal.animal_id = animals.animal_ID
-					WHERE users_users.user_id = '.$this->user->user_id.' 
-						OR posts.user_id = '.$this->user->user_id.'
+					WHERE (users_users.user_id = '.$this->user->user_id.' 
+						OR posts.user_id = '.$this->user->user_id.')
+						AND (user_animal.is_deleted = 0
+                        OR user_animal.is_deleted IS NULL)
 					ORDER BY posts.created DESC';
 						
 				# Run posts query, store the results in the variable $posts
