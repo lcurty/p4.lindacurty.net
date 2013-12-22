@@ -218,21 +218,11 @@
 			$_POST['acquired_date'] = $new_date;
 		}
 		
-		# Create record for post
-		$q = "SELECT species
-			  FROM animals
-			  WHERE animal_ID = ".$_POST['animal_id'];
-		$this_animal = DB::instance(DB_NAME)->select_field($q);
-			  
-		$post_animal['created']  = Time::now();
-		$post_animal['modified'] = Time::now();
-		$post_animal['user_id']  = $this->user->user_id;
-		$post_animal['content']  = "I just added a new ".$this_animal." to my farm!";
-
 		# Insert this user into the database and redirect to login page
 		$user_id = DB::instance(DB_NAME)->insert('user_animal', $_POST);
 		
-		# Get Last Inserted ID
+		# Create record for post
+		// Get Last Inserted ID
 		$q = "SELECT user_animal_ID
 			  FROM user_animal
 			  WHERE user_ID = ".$this->user->user_id."
@@ -241,7 +231,27 @@
 		$this_animal = DB::instance(DB_NAME)->select_field($q);
 		$post_animal['user_animal_ID'] = $this_animal;
 
+		// Get Animal Species for Post
+		$q = "SELECT species
+			  FROM animals
+			  WHERE animal_ID = ".$_POST['animal_id'];
+		$this_animal = DB::instance(DB_NAME)->select_field($q);
+		
+		// Build array  
+		$post_animal['created']  = Time::now();
+		$post_animal['modified'] = Time::now();
+		$post_animal['user_id']  = $this->user->user_id;
+		
+		if(isset($_REQUEST['animal_name']) && strlen(trim($_REQUEST['animal_name'])) !== 0){
+			$post_animal['content']  = "I just added a new ".$this_animal." to my farm! <a href='/animals/preview/".$post_animal['user_animal_ID']."'>Meet ".$_POST['animal_name']."!</a>";
+		} else {
+			$post_animal['content']  = "I just added a new <a href='/animals/preview/".$post_animal['user_animal_ID']."'>".$this_animal."</a> to my farm!";
+		}
+		
+		// Post to database
 		$post_id = DB::instance(DB_NAME)->insert('posts', $post_animal);
+		
+		# Redirect
 		Router::redirect("/users/profile");
 	}
 	
@@ -254,9 +264,11 @@
 		# Get animal information
 		$q = "SELECT  
 				user_animal.user_animal_ID,
+				user_animal.user_ID,
 				user_animal.adult_image,
 				user_animal.baby_image,
 				user_animal.animal_name,
+				user_animal.is_deleted,
 				animals.animal_ID,
 				animals.species,
 				animals.default_image,
@@ -307,12 +319,28 @@
 				END AS age_category
 			FROM user_animal INNER JOIN animals ON user_animal.animal_ID = animals.animal_ID
 			WHERE user_animal.user_animal_id = ".$animal_ID;
+		
 
 		# Run query, store the results in a variable
 		$animals = DB::instance(DB_NAME)->select_rows($q);
 		
+		# Check if user for edit rights	
+		$q = "SELECT  
+				user_animal.user_ID
+			FROM user_animal
+			WHERE user_animal.user_animal_id = ".$animal_ID;
+		$is_user = DB::instance(DB_NAME)->select_field($q);
+
+		if(isset($is_user) && $is_user == $this->user->user_id) {
+			$edit_rights	= 'Yes';
+		} else {
+			$edit_rights	= 'No';
+		}
+		
 		#Pass data to the view
-    	$this->template->content->animals  	= $animals;
+    	$this->template->content->animals  		= $animals;
+		$this->template->content->edit_rights 	= $edit_rights;
+		$this->template->content->is_user	 	= $is_user;
 
 		# Render template
 		echo $this->template;
@@ -325,6 +353,19 @@
 		$this->template->content = View::instance('v_animals_edit');
 		$this->template->title   = "Farm Friends: Edit Animal";
 		
+		# Check if user for edit rights	
+		$q = "SELECT  
+				user_animal.user_ID
+			FROM user_animal
+			WHERE user_animal.user_animal_id = ".$animal_ID;
+		$is_user = DB::instance(DB_NAME)->select_field($q);
+
+		if(isset($is_user) && $is_user == $this->user->user_id) {
+			$edit_rights	= 'Yes';
+		} else {
+			$edit_rights	= 'No';
+		}
+			
 		# Get list of animals
 			$q = "SELECT 
 				animal_ID,
@@ -399,6 +440,7 @@
 		#Pass data to the view
 		$this->template->content->animal_list	= $animal_list;
     	$this->template->content->animals  		= $animals;
+		$this->template->content->edit_rights 	= $edit_rights;
 
 		# Render template
 		echo $this->template;
@@ -585,24 +627,10 @@
 			$_POST['acquired_date'] = $new_date;
 		}
 		
-		# Create record for post
-		if(isset($_REQUEST['animal_name']) && strlen(trim($_REQUEST['animal_name'])) !== 0 ) {
-			$species = $_POST['animal_name'];
-		} else {
-			$q = "SELECT species
-				  FROM animals
-				  WHERE animal_ID = ".$_POST['animal_id'];
-			$species = DB::instance(DB_NAME)->select_field($q);
-			$species = "a ".$species;
-		}
-		$post_animal['created']  = Time::now();
-		$post_animal['modified'] = Time::now();
-		$post_animal['user_id']  = $this->user->user_id;
-		$post_animal['content']  = "I just updated information about ".$species."!";
-
 		# Insert this user into the database and redirect to login page
 		$user_id = DB::instance(DB_NAME)->update('user_animal', $_POST, 'WHERE user_animal_ID = '.$user_animal_ID);
 		
+		# Create record for post
 		# Get Last Inserted ID
 		$q = "SELECT user_animal_ID
 			  FROM user_animal
@@ -612,7 +640,27 @@
 		$this_animal = DB::instance(DB_NAME)->select_field($q);
 		$post_animal['user_animal_ID'] = $this_animal;
 
+		// Get Name or Animal Species for Post
+		if(isset($_REQUEST['animal_name']) && strlen(trim($_REQUEST['animal_name'])) !== 0 ) {
+			$post_about = $_POST['animal_name'];
+		} else {
+			$q = "SELECT species
+				  FROM animals
+				  WHERE animal_ID = ".$_POST['animal_id'];
+			$post_about = DB::instance(DB_NAME)->select_field($q);
+			$post_about = "a ".$species;
+		}
+		
+		// Build array  
+		$post_animal['created']  = Time::now();
+		$post_animal['modified'] = Time::now();
+		$post_animal['user_id']  = $this->user->user_id;
+		$post_animal['content']  = "I just updated information about ".$post_about.". <a href='/animals/preview/".$post_animal['user_animal_ID']."'>Check it out!</a>";
+		
+		// Post to database
 		$post_id = DB::instance(DB_NAME)->insert('posts', $post_animal);
+
+		# Redirect
 		Router::redirect("/animals/preview/".$user_animal_ID);
 	}
 	

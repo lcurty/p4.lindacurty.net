@@ -56,7 +56,7 @@ header {
 
 h1 {
 	font-family: 'Rum Raisin', sans-serif;
-	font-size: 1.5em;
+	font-size: 1.7em;
 }
 
 h2 {
@@ -103,27 +103,42 @@ label, .label {
 	vertical-align: top;
 }
 
+/* Links */
+
+a:link, a:visited, a:hover, a:active {
+	color: #800000;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a:hover, a:active {
+	text-decoration:underline;
+}
+
 /* Navigation */
 nav {
 	float: right;
 	margin: -20px 0px 10px 0px;
 }
 
-nav, nav a {
+nav, 
+nav a:link, 
+nav a:visited, 
+nav a:hover, 
+nav a:active {
 	font-size: .9em;
 	color: #514c49;
 	padding-right: 10px;
 }
 
-/* Links */
-
-a:link, a:visited, a:hover, a:active {
-	color: #514c49;
-	text-decoration: none;
-}
 
 /* Animal Inventory */
 .critter_count {
+	float: right;
+}
+
+#critter_categories {
+	width: 675px;
 	float: right;
 }
 
@@ -153,20 +168,20 @@ a:link, a:visited, a:hover, a:active {
 	text-align: center;
 }
 
-#search_farm {
-	float:left;
+#search_farm,
+#follow_list {
 	width: 275px;
 	border: 1px solid #800000;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
 	border-radius: 5px;
 	border-spacing: 0px;
-	margin: 0px 20px 0px 0px;
+	margin: 0px 20px 20px 0px;
 	padding: 5px;
 }
 
 #animal_table {
-	width: 100%;
+	width: 675px;
 	max-width: 675px;
 	border: 1px solid #800000;
 	-moz-border-radius:5px;
@@ -174,6 +189,7 @@ a:link, a:visited, a:hover, a:active {
 	border-radius: 5px;
 	border-spacing: 0px;
 	margin: 0px;
+	float: right;
 }
 
 th {
@@ -195,8 +211,8 @@ tr.even {
 /* Posts and Comments*/
 
 form.addPost {
-	float:right;
-	margin-right: 400px;
+	margin-left: 130px;
+	padding-top: 2px;
 }
 
 article {
@@ -273,12 +289,12 @@ article time {
 }
 
 .profile_image {
-	float: left;
-	margin: 0px 62px 15px 42px;
+	margin: 20px 62px 15px 42px;
 	width: 200px;
 	height: 200px;
 }
 
+.feed_image,
 .edit_image {
 	float: left;
 	margin: 15px 10px 15px 0px;
@@ -333,9 +349,14 @@ article time {
 }
 */
 .button,
+a:link.button, 
+a:visited.button, 
+a:hover.button, 
+a:active.button,
 input.button {
 	background-color: #E0DFDE;
 	color: #000000;
+	text-decoration: none;
 	padding: 5px 6px;
 	font-size: 0.9em;
 	font-weight: bold;

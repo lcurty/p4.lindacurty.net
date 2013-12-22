@@ -44,12 +44,17 @@
 						
 				# Run posts query, store the results in the variable $posts
 				$posts = DB::instance(DB_NAME)->select_rows($q);
+				
+				# Find number of rows
+				
+				//$num_rows = DB::instance(DB_NAME)->select_field('SELECT COUNT(posts.post_ID) FROM posts WHERE posts.user_id = '.$this->user->user_id);
 		
 				# Query comments
 				$q = 'SELECT 
 						comments.comment,
 						comments.created,
 						comments.post_id,
+						comments.user_id,
 						users.first_name,
 						users.last_name,
 						users.profile_image
@@ -64,13 +69,18 @@
 				$q = 'SELECT DISTINCT(post_id)
 					FROM comments';
 		
-				# Run the query, store the results in the variable $comment_count
+				# Run the query, store the results in the variable $has_comment
 				$has_comment = DB::instance(DB_NAME)->select_rows($q);
+				
+				# Get user profile image
+				$user_image = $this->user->profile_image;
 
 				# Pass data to the View
 				$this->template->content->posts = $posts;
 				$this->template->content->comments = $comments;
 				$this->template->content->has_comment = $has_comment;
+				$this->template->content->user_image = $user_image;
+				//$this->template->content->num_rows = $num_rows;
 		
 				# Render the View
 				echo $this->template;
@@ -118,21 +128,21 @@
 				
 				# Set up query to get all users
 				$q = 'SELECT
-								user_id,
-								first_name,
-								last_name,
-								profile_image
-							FROM users
-							WHERE user_ID <> '.$this->user->user_id.'
-							ORDER BY first_name ASC, last_name ASC';
+						user_id,
+						first_name,
+						last_name,
+						profile_image
+					FROM users
+					WHERE user_ID <> '.$this->user->user_id.'
+					ORDER BY first_name ASC, last_name ASC';
 								
 				# Run query
 				$users = DB::instance(DB_NAME)->select_rows($q);
 				
 				# Set up query to get all connections from users_users table
 				$q = 'SELECT user_id_followed
-							FROM users_users
-							WHERE user_id = '.$this->user->user_id;
+					FROM users_users
+					WHERE user_id = '.$this->user->user_id;
 								
 				# Run query
 				$connections = DB::instance(DB_NAME)->select_array($q,'user_id_followed');

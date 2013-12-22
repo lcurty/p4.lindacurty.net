@@ -9,17 +9,26 @@
 		<link href='http://fonts.googleapis.com/css?family=Rum+Raisin' rel='stylesheet' type='text/css' media="all">
         <link href="/css/styles.css" rel="stylesheet" type="text/css" media="all">	
         <link href="/js/jquery-ui-1.10.3.custom/css/blitzer/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" type="text/css" media="all">
-        
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">        
+
         <!-- Global JS -->
         <script src="/js/jquery-1.9.1.js" type="text/javascript"></script>
         <script src="/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
         <script src="/js/filter.js" type="text/javascript"></script>
+        <script src="/js/jscroll/jquery.jscroll.js" type="text/javascript"></script>
 		<script>
 			$(function() {
 				$( "#born_date" ).datepicker();
 				$( "#acquired_date" ).datepicker();
 				$( "#gone_date" ).datepicker();
 				$( "tr:even").addClass('even');
+				$('.scroll').jscroll({
+				    loadingHtml: '<p class="center"><img src="/images/loading35.gif" alt="Loading" /></p>',
+					padding: 20,
+					nextSelector: 'a.jscroll-next:last',
+					contentSelector: 'li'
+				});
 			});
         </script>
    
@@ -31,7 +40,7 @@
     <body>  
 
         <header>
-            <img src="/images/farm-friends-logo.png">
+            <a href='/'><img src="/images/farm-friends-logo.png"></a>
         </header>
         
         <div id="page">
@@ -60,7 +69,5 @@
             </div>
         </div>
         
-
-                
     </body>
 </html>

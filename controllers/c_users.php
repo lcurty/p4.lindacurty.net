@@ -50,7 +50,7 @@
 		if(isset($_FILES['profile_image']['name']) && ($_FILES['profile_image']['name'] != "")){
 			
 			# Setup Image Restrictions
-			$allowedExts = array("gif", "jpeg", "jpg", "png");
+			$allowedExts = array("gif", "jpeg", "jpg", "png", "GIF", "JPEG", "JPG", "PNG");
 			$temp = explode(".", $_FILES["profile_image"]["name"]);
 			$extension = end($temp);
 			
@@ -75,13 +75,13 @@
 					
 					# Resize and crop image
 					$crop_image = ($_FILES['profile_image']['tmp_name']);
-					if ($ext == "gif") {
+					if (($ext == "gif") || ($ext == "GIF")) {
 						header('Content-Type: image/gif');
 						$myImage = imagecreatefromgif($crop_image);
-					} elseif (($ext == "jpg") || ($ext == "jpeg")){
+					} elseif (($ext == "jpg") || ($ext == "jpeg") || ($ext == "JPG") || ($ext == "JPEG")){
 						header('Content-Type: image/jpg');
 						$myImage = imagecreatefromjpeg($crop_image);
-					} elseif ($ext == "png") {
+					} elseif (($ext == "png") || ($ext == "PNG")) {
 						header('Content-Type: image/png');
 						$myImage = imagecreatefrompng($crop_image);
 					}
@@ -100,11 +100,11 @@
 					imagecopyresized($thumb, $myImage, 0, 0, $x, $y, $thumbSize, $thumbSize, $smallestSide, $smallestSide);
 
 					# Move file to folder
-					if ($ext == "gif") {
+					if (($ext == "gif") || ($ext == "GIF")) {
 						imagegif($thumb, $target);
-					} elseif (($ext == "jpeg") || ($ext == "jpg")){
+					} elseif (($ext == "jpg") || ($ext == "jpeg") || ($ext == "JPG") || ($ext == "JPEG")){
 						imagejpeg($thumb, $target);
-					} elseif ($ext == "png") {
+					} elseif (($ext == "png") || ($ext == "PNG")) {
 						imagepng($thumb, $target);
 					}
 					
@@ -178,8 +178,17 @@
     	Router::redirect("/");
 
 	}
-	
-	public function profile () {
+		
+	public function profile ($profile_id = NULL) {
+
+		# Set user as default profile if no ID declared	and assign edit rights	
+		if(!isset($profile_id)) {
+			$profile_id 	= $this->user->user_id;
+			$edit_rights	= 'Yes';
+		} else {
+			$edit_rights	= 'No';
+		}
+		
 		# Setup view
 		$this->template->content = View::instance('v_users_profile');
 		$this->template->title   = "Farm Friends: Farmer Profile";
@@ -190,20 +199,20 @@
 				animals.default_image,
 				COUNT(user_animal.user_animal_ID) AS animal_count
 			FROM user_animal INNER JOIN animals ON user_animal.animal_ID = animals.animal_ID
-			WHERE user_animal.user_id = ".$this->user->user_id."
+			WHERE user_animal.user_id = ".$profile_id."
 				AND user_animal.is_deleted = 0
 			GROUP BY animals.species";
 
 		# Run categories query, store the results in the variable $categories
 		$categories = DB::instance(DB_NAME)->select_rows($q);
-
+		
 		# Get user information
 		$q = 'SELECT 
 				users.first_name,
 				users.last_name,
 				users.profile_image
 			FROM users
-			WHERE users.user_id = '.$this->user->user_id;
+			WHERE users.user_id = '.$profile_id;
 				
 		# Run users query, store the results in the variable $profiles
 		$profiles = DB::instance(DB_NAME)->select_rows($q);
@@ -261,17 +270,42 @@
 						END
 				END AS age_category
 			FROM user_animal INNER JOIN animals ON user_animal.animal_ID = animals.animal_ID
-			WHERE user_animal.user_ID = ".$this->user->user_id."
+			WHERE user_animal.user_ID = ".$profile_id."
 				AND user_animal.is_deleted = 0
 			ORDER BY animal_name ASC";
 
 		# Run posts query, store the results in the variable $posts
 		$inventory = DB::instance(DB_NAME)->select_rows($q);
 
-		#Pass data to the view
-    	$this->template->content->profiles  	= $profiles;
-		$this->template->content->inventory 	= $inventory;
-		$this->template->content->categories 	= $categories;
+		# Inventory Count
+		$inventory_count = DB::instance(DB_NAME)->select_field('SELECT COUNT(user_animal_id) FROM user_animal WHERE user_id = '.$profile_id);
+
+		# Get list of users following
+		$q = 'SELECT
+				users.user_id,
+				users.first_name,
+				users.last_name,
+				users.profile_image,
+				users_users.user_id_followed
+			FROM users INNER JOIN users_users ON users.user_ID = users_users.user_id_followed
+			WHERE users_users.user_id = '.$profile_id.'
+			ORDER BY users.first_name ASC, users.last_name ASC';
+			
+		# Run query
+		$connections = DB::instance(DB_NAME)->select_array($q,'user_id_followed');
+
+
+		# Connections Count
+		$connections_count = DB::instance(DB_NAME)->select_field('SELECT COUNT(user_animal_id) FROM user_animal WHERE user_id = '.$profile_id);
+
+		# Pass data to the view
+    	$this->template->content->profiles  			= $profiles;
+		$this->template->content->inventory 			= $inventory;
+		$this->template->content->categories 			= $categories;
+		$this->template->content->connections 			= $connections;
+		$this->template->content->edit_rights 			= $edit_rights;
+		$this->template->content->inventory_count 		= $inventory_count;
+		$this->template->content->connections_count 	= $connections_count;
 	
 		# Render template
 		echo $this->template;
