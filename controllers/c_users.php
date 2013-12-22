@@ -185,6 +185,8 @@
 		if(!isset($profile_id)) {
 			$profile_id 	= $this->user->user_id;
 			$edit_rights	= 'Yes';
+		} elseif(isset($profile_id) && $profile_id == $this->user->user_id) {
+			$edit_rights	= 'Yes';
 		} else {
 			$edit_rights	= 'No';
 		}

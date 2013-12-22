@@ -61,7 +61,7 @@
 			<label for="notes" class="animal_form" id="notes_label">Notes</label>
 			<textarea name="notes" id="notes" cols="65" ></textarea>
         </p>
-        <p class="center"><input type="submit" class="button" id="submit_btn" value="Sign Up" /></p>
+        <p class="center"><input type="submit" class="button" id="submit_btn" value="Add Animal" /></p>
 		<p class="note">* Required
 	</fieldset>  
 </form>

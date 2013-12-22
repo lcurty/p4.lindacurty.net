@@ -295,7 +295,7 @@ article time {
 }
 
 .profile_image {
-	margin: 20px 62px 15px 42px;
+	margin: 20px 62px 15px 40px;
 	width: 200px;
 	height: 200px;
 }
@@ -363,7 +363,12 @@ input.button {
 	border-radius: 5px;
 }
 
-.follow_button {
+.follow_button,
+a:link.follow_button, 
+a:visited.follow_button, 
+a:hover.follow_button, 
+a:active.follow_button,
+ {
 	margin: 5px auto;
 	display: table;
 }

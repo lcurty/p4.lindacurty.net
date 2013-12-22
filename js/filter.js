@@ -3,7 +3,7 @@
 $(document).ready(function () {
 	
 	// Declare row variable
-	var $rows = $('#animal_table tr');
+	var $rows = $('#animal_table tbody tr');
 	
 	// Listener and function
 	$('#search').keyup(function () {
