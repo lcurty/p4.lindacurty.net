@@ -164,6 +164,14 @@
 	}
 	
 	public function logout() {
+		# Make sure user is logged in if they want to use anything in this controller
+		if(!$this->user) {
+			
+			# Send them to the login page
+			Router::redirect("/users/login");
+
+		}
+		
 		# Generate and save a new token for next login
     	$new_token = sha1(TOKEN_SALT.$this->user->email.Utils::generate_random_string());
     	$data = Array("token" => $new_token);
@@ -180,7 +188,14 @@
 	}
 		
 	public function profile ($profile_id = NULL) {
+		# Make sure user is logged in if they want to use anything in this controller
+		if(!$this->user) {
+			
+			# Send them to the login page
+			Router::redirect("/users/login");
 
+		}
+		
 		# Set user as default profile if no ID declared	and assign edit rights	
 		if(!isset($profile_id)) {
 			$profile_id 	= $this->user->user_id;
@@ -315,6 +330,14 @@
 	
 	public function edit() {
 
+		# Make sure user is logged in if they want to use anything in this controller
+		if(!$this->user) {
+			
+			# Send them to the login page
+			Router::redirect("/users/login");
+
+		}
+		
 		# Setup view
 		$this->template->content = View::instance('v_users_edit');
 		$this->template->title   = "Farm Friends: Edit Profile";

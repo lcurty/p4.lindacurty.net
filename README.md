@@ -44,4 +44,3 @@ JavaScript Components
 
 Additional Information for Graders
 ----------------------------------
-None

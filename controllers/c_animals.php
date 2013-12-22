@@ -1,9 +1,17 @@
 <?php
 	class animals_controller extends base_controller {
 
-	public function __construct() {
-		parent::__construct();
-	} 
+			public function __construct() {
+					parent::__construct();
+	
+					# Make sure user is logged in if they want to use anything in this controller
+					if(!$this->user) {
+						
+						# Send them to the login page
+						Router::redirect("/users/login");
+	
+					}
+			}
 
 	public function index() {
 		# Setup view

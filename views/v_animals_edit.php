@@ -72,7 +72,7 @@
             </p>
             <p class="center">
                 <input type="submit" class="button" id="submit_btn" value="Update" />
-                <a href="/users/profile" class="button">Back To Profile</a>
+                <a href="/animals/preview/<?=$animal['user_animal_ID']?>" class="button">Cancel</a>
             </p>
             <p class="note">* Required
                 

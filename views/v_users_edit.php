@@ -21,7 +21,10 @@
                 <?php endif; ?>
                 <hr class="clear" />
             </p>
-            <p class="center"><input type="submit" class="button" id="submit_btn" value="Update" /></p>
+            <p class="center">
+            	<input type="submit" class="button" id="submit_btn" value="Update" />
+                <a href="/users/profile" class="button">Cancel</a>
+            </p>
             <p class="note">* Required
         </fieldset>  
     </form>
