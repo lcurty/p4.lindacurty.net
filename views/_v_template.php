@@ -9,8 +9,8 @@
 		<link href='http://fonts.googleapis.com/css?family=Rum+Raisin' rel='stylesheet' type='text/css' media="all">
         <link href="/css/styles.css" rel="stylesheet" type="text/css" media="all">	
         <link href="/js/jquery-ui-1.10.3.custom/css/blitzer/jquery-ui-1.10.3.custom.min.css" rel="stylesheet" type="text/css" media="all">
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-        <link rel="icon" href="/favicon.ico" type="image/x-icon">        
+        <link rel="shortcut icon" href="http://p4.lindacurty.net/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="http://p4.lindacurty.net/favicon.ico" type="image/x-icon">        
 
         <!-- Global JS -->
         <script src="/js/jquery-1.9.1.js" type="text/javascript"></script>

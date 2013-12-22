@@ -1,6 +1,6 @@
 <h1>Add New Animal</h1>
 
-<form method='POST' name='new_animal_form' action='/animals/p_add'enctype="multipart/form-data"> 
+<form method='POST' name='new_animal_form' action='/animals/p_add' enctype="multipart/form-data"> 
 	<fieldset>
 		<?php if(isset($error) && $error == 'blank-fields'): ?>
             <div class='error'>
@@ -51,11 +51,11 @@
         </p>
         <p>
 			<label for="baby_image" class="animal_form" id="baby_image_label">Baby Photo</label>
-			<input type="file" name="baby_image" id="baby_image" size="38" />
+			<input type="file" name="baby_image" id="baby_image" />
         </p>
         <p>
 			<label for="adult_image" class="animal_form" id="adult_image_label">Adult Photo</label>
-			<input type="file" name="adult_image" id="adult_image" size="38" />
+			<input type="file" name="adult_image" id="adult_image" />
         </p>
         <p>
 			<label for="notes" class="animal_form" id="notes_label">Notes</label>
