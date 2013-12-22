@@ -184,6 +184,11 @@ Animal Inventory
 	vertical-align: middle;
 }
 
+.follow {
+	width: 100%;
+	padding: 0px 55px;
+}
+
 .users_users {
 	width: 150px;
 	border: 1px solid #800000;
