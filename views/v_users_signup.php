@@ -1,4 +1,4 @@
-<form method='POST' name='signup_form' action='/users/p_signup'enctype="multipart/form-data"> 
+<form method='POST' class="right" name='signup_form' action='/users/p_signup'enctype="multipart/form-data"> 
 	<fieldset>
 		<legend>Sign Up</legend>
  		<?php if(isset($error) && $error == 'blank-fields'): ?>
@@ -33,12 +33,15 @@
 			<label for="profile_image" id="image_label">Upload Photo</label><br />
 			<input type="file" name="profile_image" id="profile_image" size="38" />
         </p>
-        <p class="center"><input type="submit" class="button" id="submit_btn" value="Sign Up" /></p>
+        <p class="center">
+        	<input type="submit" class="button" id="submit_btn" value="Sign Up" />
+    	</p>
         <p class="note">* Required
 	</fieldset>  
 </form>
 
-<!-- Switch to Sign up Form -->
-<div id="switch-link">
-  <p><a href="/users/login">I have an account ... log me in!</a></p>
+<!-- Include Welcome Message -->
+<div class="welcome">
+	<?php include 'v_users_welcome.php' ?>
+	<a href="/users/login" class="button">Login</a>
 </div>

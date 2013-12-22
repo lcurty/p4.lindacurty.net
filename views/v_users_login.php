@@ -5,14 +5,10 @@
         </div>
         <br>
     <?php endif; ?>
-
-<p>
-  Welcome to the The Chipper Chirpper: A place to discuss all things happy.<br />
-  Now with ability to comment to posts and upload profile pictures.
-</p>
+    
     
 <!-- Login Form -->
-<form method='POST' name='login_form' action='/users/p_login'> 
+<form method='POST' name='login_form' class="right" action='/users/p_login'> 
   <fieldset>
   	<legend>Login</legend>
     
@@ -34,12 +30,14 @@
         <br>
     <?php endif; ?>
     
-    <p class="center"><input type="submit" class="button" id="submit_btn" value="Login" /></p>
+    <p class="center">
+        <input type="submit" class="button" id="submit_btn" value="Login" />
+    </p>
   </fieldset>  
 </form>
 
-<!-- Switch to Sign up Form -->
-<div id="switch-link">
-  <p><a href="/users/signup">I want to join ... sign me up!</a></p>
+<!-- Include Welcome Message -->
+<div class="welcome">
+	<?php include 'v_users_welcome.php' ?>
+    <a href="/users/signup" class="button">Sign Up</a>
 </div>
-

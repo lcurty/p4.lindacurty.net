@@ -73,6 +73,12 @@ h2 {
 	font-size: .9em;
 }
 
+/* Welcome */
+
+.welcome {
+	margin-left: 40px; 
+}
+
 /* Header */
 
 header img {
@@ -340,14 +346,6 @@ article time {
 
 /* User List */
 
-/*.users_table {
-	border: 0px;
-}
-
-.users_table td {
-	padding: 4px 10px;
-}
-*/
 .button,
 a:link.button, 
 a:visited.button, 
