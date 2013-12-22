@@ -29,7 +29,6 @@ header {
 	padding: 40px 10px 10px;
 	background-color: #ffffff;
 	opacity:0.95;
-	filter:alpha(opacity=95); /* For IE8 and earlier */
 	box-shadow: 0px 0px 15px 2px #8f8d82;
 	width: 1000px;
 }
@@ -396,7 +395,7 @@ input.button {
 a:link.follow_button, 
 a:visited.follow_button, 
 a:hover.follow_button, 
-a:active.follow_button,
+a:active.follow_button
  {
 	margin: 5px auto;
 	display: table;
