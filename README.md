@@ -27,6 +27,7 @@ Features of the Application
 - Filter on list of animals displayed on user's profile page
 - Delete animal profile
 - Follow other users
+- View list of user's follows on his/her profile page; follows in this list are linked to that follow's profile
 - Post status updates
 - Automatically includes notfication of added or edited animals in post feed with link to that animal preview
 - Comment on posts
